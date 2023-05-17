@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/teal_200"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+
+            <Button
+                android:id="@+id/btnComanda"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:text="Comanda"
+                android:layout_marginRight="5dp"
+                android:textAlignment="center"/>
+
+            <Button
+                android:id="@+id/btnReserva"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:text="Reserva"
+                android:layout_marginLeft="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btnAlmacen"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:text="almacen"
+            android:layout_marginRight="5dp"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/btnCobro"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:text="Cobro"
+            android:layout_marginLeft="5dp"/>
+
+
+
+
+    </LinearLayout>
+</LinearLayout>
