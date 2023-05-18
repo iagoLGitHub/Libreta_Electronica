@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
+    android:background="@color/fondoColor"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -13,8 +13,11 @@
         android:gravity="right">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btnAtras"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerInside"
+            android:background="@color/botonesInferiores"
             android:src="@drawable/back" />
 
 
@@ -34,6 +37,8 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:text="Barra"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/botonesInferiores"
             android:textAlignment="center" />
 
         <Button
@@ -41,7 +46,9 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginLeft="5dp"
+            android:textColor="@color/black"
             android:layout_weight="1"
+            android:backgroundTint="@color/botonesInferiores"
             android:text="Mesa" />
 
     </LinearLayout>
@@ -59,6 +66,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="1"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.103"
@@ -71,6 +79,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="2"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.529"
@@ -83,6 +92,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="3"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.948"
@@ -95,6 +105,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="4"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.103"
@@ -107,6 +118,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="5"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.529"
@@ -119,6 +131,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="6"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.948"
@@ -131,6 +144,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="7"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.103"
@@ -144,6 +158,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="8"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.529"
@@ -156,6 +171,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="9"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.948"
@@ -168,6 +184,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="10"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.102"
@@ -180,6 +197,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="11"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.529"
@@ -192,6 +210,7 @@
             android:layout_width="51dp"
             android:layout_height="45dp"
             android:text="12"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.947"

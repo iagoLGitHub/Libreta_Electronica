@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/teal_200"
+    android:background="@color/fondoColor"
     android:padding="20dp">
 
     <LinearLayout
@@ -12,8 +12,11 @@
         android:gravity="right">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btnAtras"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerInside"
+            android:background="@color/botonesInferiores"
             android:src="@drawable/back"/>
 
 
@@ -26,21 +29,27 @@
         android:gravity="center">
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnComanda"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_weight="1"
                 android:text="Comanda"
+                android:background="@drawable/efectoboton"
+                android:src="@drawable/comanda"
+                android:scaleType="centerInside"
                 android:layout_marginRight="5dp"
                 android:textAlignment="center"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnReserva"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_weight="1"
                 android:text="Reserva"
+                android:background="@drawable/efectoboton"
+                android:src="@drawable/reserva"
+                android:scaleType="centerInside"
                 android:layout_marginLeft="5dp"/>
 
     </LinearLayout>
@@ -51,20 +60,26 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnAlmacen"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_weight="1"
             android:text="almacen"
+            android:background="@drawable/efectoboton"
+            android:src="@drawable/almacen"
             android:layout_marginRight="5dp"
+            android:scaleType="centerInside"
             android:textAlignment="center"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCobro"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_weight="1"
+            android:background="@drawable/efectoboton"
+            android:src="@drawable/billete"
+            android:scaleType="centerInside"
             android:text="Cobro"
             android:layout_marginLeft="5dp"/>
 
