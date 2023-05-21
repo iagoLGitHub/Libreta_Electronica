@@ -1,4 +1,4 @@
-package com.example.libretaelectronica;
+package com.example.libretaelectronica.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 ;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnComanda:
 
-                    i=new Intent(this,SeleccionarMesa.class);
+                    i=new Intent(this, SeleccionarMesa.class);
                     startActivity(i);
                 break;
         }

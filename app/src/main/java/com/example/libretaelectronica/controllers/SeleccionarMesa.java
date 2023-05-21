@@ -1,18 +1,15 @@
-package com.example.libretaelectronica;
+package com.example.libretaelectronica.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Switch;
 
-import com.example.libretaelectronica.databinding.ActivityMainBinding;
+import com.example.libretaelectronica.R;
+import com.example.libretaelectronica.controllers.ListaComanda;
 import com.example.libretaelectronica.databinding.ActivitySeleccionarMesaBinding;
 
 public class SeleccionarMesa extends AppCompatActivity implements View.OnClickListener {
@@ -77,7 +74,7 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-        Intent i=new Intent(this,ListaComanda.class);
+        Intent i=new Intent(this, ListaComanda.class);
         String texto;
         switch (v.getId()){
 

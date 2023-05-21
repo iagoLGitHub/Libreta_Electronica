@@ -1,10 +1,11 @@
-package com.example.libretaelectronica;
+package com.example.libretaelectronica.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.databinding.ActivityOpcionesComandaBinding;
 
 public class OpcionesComanda extends AppCompatActivity implements View.OnClickListener{
