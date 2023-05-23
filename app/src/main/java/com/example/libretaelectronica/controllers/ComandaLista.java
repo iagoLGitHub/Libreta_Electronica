@@ -1,25 +1,24 @@
 package com.example.libretaelectronica.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.ListFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.libretaelectronica.R;
-import com.example.libretaelectronica.adapters.AdaptadorPersonalizado;
+import com.example.libretaelectronica.adapters.AdaptadorComanda;
 import com.example.libretaelectronica.databinding.ActivityListaComandaBinding;
-import com.example.libretaelectronica.databinding.ActivityOpcionesComandaBinding;
+import com.example.libretaelectronica.fragments.BebidaListaFragment;
+import com.example.libretaelectronica.fragments.ComidaListaFragment;
+import com.example.libretaelectronica.fragments.PostreListaFragment;
 import com.example.libretaelectronica.models.Producto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaComanda extends AppCompatActivity implements View.OnClickListener {
+public class ComandaLista extends AppCompatActivity implements View.OnClickListener {
 
     List<Producto> productoLista;
     ActivityListaComandaBinding comandaBinding;
@@ -54,7 +53,7 @@ public class ListaComanda extends AppCompatActivity implements View.OnClickListe
         productoLista.add(p2);
         productoLista.add(p3);
         productoLista.add(p4);
-        AdaptadorPersonalizado adaptadorPersonalizado = new AdaptadorPersonalizado(
+        AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
                 this, R.layout.layoutitem, productoLista);
 
         comandaBinding.listComanda.setAdapter(adaptadorPersonalizado);
@@ -71,14 +70,21 @@ public class ListaComanda extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
 
              case R.id.btnComida:
-                 ComidaLista fragment = new ComidaLista();
-                 fragmentTransaction.add(R.id.listaFragmentPrincipal, fragment);
+                 ComidaListaFragment fragmentComida = new ComidaListaFragment();
+                 fragmentTransaction.replace(R.id.listaFragmentPrincipal, fragmentComida);
                  fragmentTransaction.commit();
+                 break;
 
             case R.id.btnBebida:
+                BebidaListaFragment fragmentBebida=new BebidaListaFragment();
+                fragmentTransaction.replace(R.id.listaFragmentPrincipal,fragmentBebida);
+                fragmentTransaction.commit();
                 break;
 
             case R.id.btnPostre:
+                PostreListaFragment fragmentPostre=new PostreListaFragment();
+                fragmentTransaction.replace(R.id.listaFragmentPrincipal,fragmentPostre);
+                fragmentTransaction.commit();
                 break;
 
         }

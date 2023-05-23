@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="9"
-    tools:context=".fragments.ComidaListaFragment">
+    tools:context=".fragments.PostreListaFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <ListView
-        android:id="@+id/listaComida"
+        android:id="@+id/listaPostre"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

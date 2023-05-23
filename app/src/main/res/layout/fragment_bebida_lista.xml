@@ -3,16 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="9"
-    tools:context=".fragments.ComidaListaFragment">
+    tools:context=".fragments.BebidaListaFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
     <ListView
-        android:id="@+id/listaComida"
+        android:id="@+id/listaBebida"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 
 
 </FrameLayout>

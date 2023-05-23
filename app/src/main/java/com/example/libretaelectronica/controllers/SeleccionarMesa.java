@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.libretaelectronica.R;
-import com.example.libretaelectronica.controllers.ListaComanda;
 import com.example.libretaelectronica.databinding.ActivitySeleccionarMesaBinding;
 
 public class SeleccionarMesa extends AppCompatActivity implements View.OnClickListener {
@@ -74,7 +73,7 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-        Intent i=new Intent(this, ListaComanda.class);
+        Intent i=new Intent(this, ComandaLista.class);
         String texto;
         switch (v.getId()){
 

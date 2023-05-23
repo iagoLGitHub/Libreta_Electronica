@@ -25,12 +25,4 @@ public class Producto {
     public void setPrecioProducto(float precioProducto) {
         this.precioProducto = precioProducto;
     }
-
-    @Override
-    public String toString() {
-        return "producto{" +
-                "nombreProducto='" + nombreProducto + '\'' +
-                ", precioProducto=" + precioProducto +
-                '}';
-    }
 }
