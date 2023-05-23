@@ -7,19 +7,25 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorBebida;
 import com.example.libretaelectronica.models.Bebida;
+import com.example.libretaelectronica.models.Producto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BebidaListaFragment extends Fragment {
+public class BebidaListaFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     ListView listaBebidaView;
     List<Bebida> bebidaLista;
+    Button aceptar,cancelar;
+    private List<Producto>listaProductos;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -47,6 +53,8 @@ public class BebidaListaFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -54,7 +62,10 @@ public class BebidaListaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bebida_lista, container, false);
-        listaBebidaView = view.findViewById(R.id.listaBebida);
+
+        listaBebidaView=view.findViewById(R.id.listaBebida);
+        aceptar=view.findViewById(R.id.btnAceptarListaBebida);
+        cancelar=view.findViewById(R.id.btnCancelarListaBebida);
         bebidaLista=new ArrayList<>();
         Bebida b1=new Bebida("bebida1",2);
         Bebida b2=new Bebida("bebida2", (float) 2.6);
@@ -65,11 +76,35 @@ public class BebidaListaFragment extends Fragment {
         bebidaLista.add(b3);
         bebidaLista.add(b4);
         AdaptadorBebida adaptadorBebida = new AdaptadorBebida(
-                getActivity(), R.layout.layoutitem, bebidaLista);
+                requireActivity(), R.layout.layoutitem, bebidaLista);
 
+        listaBebidaView.setOnItemClickListener(this);
+        aceptar.setOnClickListener(this);
+        cancelar.setOnClickListener(this);
         listaBebidaView.setAdapter(adaptadorBebida);
 
-
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnAceptarListaBebida:
+                System.out.println("boton aceptar");
+                break;
+            case R.id.btnCancelarListaBebida:
+                System.out.println("boton cancelar");
+                break;
+
+        }
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bebida bebidaSeleccionada = bebidaLista.get(position);
+        String nombreBebida = bebidaSeleccionada.getNombreProducto();
+        Toast.makeText(requireContext(), "Bebida seleccionada: " + nombreBebida, Toast.LENGTH_SHORT).show();
+
     }
 }

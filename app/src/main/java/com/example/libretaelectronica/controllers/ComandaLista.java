@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorComanda;
@@ -18,10 +20,11 @@ import com.example.libretaelectronica.models.Producto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComandaLista extends AppCompatActivity implements View.OnClickListener {
+public class ComandaLista extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     List<Producto> productoLista;
     ActivityListaComandaBinding comandaBinding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.textoCabecera.setText(textoMesa);
 
         /**Asignamos los escuchadores*/
+        comandaBinding.listComanda.setOnItemClickListener(this);
         comandaBinding.btnAtras.setOnClickListener(this);
         comandaBinding.btnComida.setOnClickListener(this);
         comandaBinding.btnBebida.setOnClickListener(this);
@@ -88,5 +92,10 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        System.out.println("esto es comandalista");
     }
 }
