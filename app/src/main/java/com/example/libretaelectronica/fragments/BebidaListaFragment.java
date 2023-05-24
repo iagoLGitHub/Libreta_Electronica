@@ -79,13 +79,7 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
         cancelar.setOnClickListener(this);
 
         listaBebidaView.setAdapter(adaptadorBebida);
-        listaBebidaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Manejar el evento de clic en el elemento de la lista aquí
-                System.out.println("Clic en el elemento de la lista");
-            }
-        });
+        listaBebidaView.setOnItemClickListener(this);
         return view;
 
     }
