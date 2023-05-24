@@ -40,7 +40,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.textoCabecera.setText(textoMesa);
 
         /**Asignamos los escuchadores*/
-        comandaBinding.listComanda.setOnItemClickListener(this);
+//        comandaBinding.listComanda.setOnItemClickListener(this);
         comandaBinding.btnAtras.setOnClickListener(this);
         comandaBinding.btnComida.setOnClickListener(this);
         comandaBinding.btnBebida.setOnClickListener(this);
@@ -60,7 +60,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
                 this, R.layout.layoutitem, productoLista);
 
-        comandaBinding.listComanda.setAdapter(adaptadorPersonalizado);
+//        comandaBinding.listComanda.setAdapter(adaptadorPersonalizado);
 
 
 

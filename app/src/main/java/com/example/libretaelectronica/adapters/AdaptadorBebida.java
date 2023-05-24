@@ -16,7 +16,7 @@ import com.example.libretaelectronica.models.Producto;
 
 import java.util.List;
 
-public class AdaptadorBebida extends ArrayAdapter<Bebida> {
+public class AdaptadorBebida extends ArrayAdapter<Bebida>{
 
     private Activity context;
     private int layoutListaBebida;
@@ -44,9 +44,14 @@ public class AdaptadorBebida extends ArrayAdapter<Bebida> {
         Producto itemBebida=listaBebida.get(position);
 
         nombreProducto.setText(itemBebida.getNombreProducto());
+        isEnabled(position);
 
         return fila;
 
+    }
+    @Override
+    public boolean isEnabled(int position) {
+        return true;
     }
 
 }
