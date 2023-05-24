@@ -1,6 +1,7 @@
 package com.example.libretaelectronica.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class AdaptadorBebida extends ArrayAdapter<Bebida>{
 
     }
 
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -44,7 +46,7 @@ public class AdaptadorBebida extends ArrayAdapter<Bebida>{
         Producto itemBebida=listaBebida.get(position);
 
         nombreProducto.setText(itemBebida.getNombreProducto());
-        isEnabled(position);
+
 
         return fila;
 

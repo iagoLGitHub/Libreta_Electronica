@@ -79,7 +79,7 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
         cancelar.setOnClickListener(this);
 
         listaBebidaView.setAdapter(adaptadorBebida);
-        listaBebidaView.setOnItemClickListener(this);
+        listaBebidaView.setOnItemClickListener(this);listaBebidaView.setClickable(true);
         return view;
 
     }
@@ -100,7 +100,6 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        System.out.println("aaa");
     }
 }
 

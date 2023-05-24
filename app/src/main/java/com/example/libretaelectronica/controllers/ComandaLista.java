@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,6 +28,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
     List<Producto> productoLista;
     ActivityListaComandaBinding comandaBinding;
+
 
 
     @Override
@@ -46,8 +51,6 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.btnBebida.setOnClickListener(this);
         comandaBinding.btnPostre.setOnClickListener(this);
 
-
-
         productoLista=new ArrayList<>();
         Producto p1=new Producto("producto1",2);
         Producto p2=new Producto("producto2", (float) 2.6);
@@ -64,7 +67,34 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
 
 
+    }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menucomanda, menu);
+        return true;
+
+    }
+    /**
+     * El boton de calculadora nos hara una llamada del sistema para que nos llevara a la aplicación calculadora*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menuCalculadora:
+                System.out.println("menuCalculadora");
+                Intent i = new Intent();
+                i.setClassName("com.android.calculator2", "com.android.calculator2.Calculator");
+                startActivity(i);
+                return true;
+            case R.id.menuCobro:
+                System.out.println("menuCobro");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

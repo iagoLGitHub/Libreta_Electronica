@@ -9,21 +9,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.libretaelectronica.R;
+import com.example.libretaelectronica.Utilidades;
 import com.example.libretaelectronica.databinding.ActivitySeleccionarMesaBinding;
 
 public class SeleccionarMesa extends AppCompatActivity implements View.OnClickListener {
-    public final static int MESABTN1=1;
-    public final static int MESABTN2=2;
-    public final static int MESABTN3=3;
-    public final static int MESABTN4=4;
-    public final static int MESABTN5=5;
-    public final static int MESABTN6=6;
-    public final static int MESABTN7=7;
-    public final static int MESABTN8=8;
-    public final static int MESABTN9=9;
-    public final static int MESABTN10=10;
-    public final static int MESABTN11=11;
-    public final static int MESABTN12=12;
+
 
 
     Button btnMesa, btnBarra;
@@ -80,65 +70,65 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
             case R.id.btnMesa1:
                 texto="Mesa 1";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN1);
+                startActivityForResult(i, Utilidades.MESABTN1);
                 break;
 
             case R.id.btnMesa2:
                 texto="Mesa 2";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN2);
+                startActivityForResult(i,Utilidades.MESABTN2);
                 break;
 
             case R.id.btnMesa3:
                 texto="Mesa 3";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN3);
+                startActivityForResult(i,Utilidades.MESABTN3);
                 break;
             case R.id.btnMesa4:
                 texto="Mesa 4";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN4);;
+                startActivityForResult(i,Utilidades.MESABTN4);;
                 break;
 
             case R.id.btnMesa5:
                 texto="Mesa 5";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN5);
+                startActivityForResult(i,Utilidades.MESABTN5);
                 break;
             case R.id.btnMesa6:
                 texto="Mesa 6";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN6);
+                startActivityForResult(i,Utilidades.MESABTN6);
                 break;
             case R.id.btnMesa7:
                 texto="Mesa 7";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN7);
+                startActivityForResult(i,Utilidades.MESABTN7);
                 break;
             case R.id.btnMesa8:
                 texto="Mesa 8";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN8);
+                startActivityForResult(i,Utilidades.MESABTN8);
                 break;
             case R.id.btnMesa9:
                 texto="Mesa 9";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN9);
+                startActivityForResult(i,Utilidades.MESABTN9);
                 break;
             case R.id.btnMesa10:
                 texto="Mesa 10";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN10);
+                startActivityForResult(i,Utilidades.MESABTN10);
                 break;
             case R.id.btnMesa11:
                 texto="Mesa 11";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN11);
+                startActivityForResult(i,Utilidades.MESABTN11);
                 break;
             case R.id.btnMesa12:
                 texto="Mesa 12";
                 i.putExtra("texto",texto);
-                startActivityForResult(i,MESABTN12);
+                startActivityForResult(i,Utilidades.MESABTN12);
                 break;
 
         }

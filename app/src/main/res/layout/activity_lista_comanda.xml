@@ -10,14 +10,6 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textoCabecera"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:text="Mesa"
-            android:textSize="50dp"
-            android:gravity="center_horizontal"/>
 
         <ImageButton
             android:id="@+id/btnAtras"
@@ -27,6 +19,16 @@
             android:scaleType="centerInside"
             android:background="@color/botonesInferiores"
             android:src="@drawable/back"/>
+
+        <TextView
+            android:id="@+id/textoCabecera"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:text="Mesa"
+            android:textSize="50dp"
+            android:gravity="center_horizontal"/>
+
 
     </LinearLayout>
     <LinearLayout
@@ -38,8 +40,7 @@
         <FrameLayout
             android:id="@+id/listaFragmentPrincipal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"/>
+            android:layout_height="match_parent"/>
 
 
     </LinearLayout>
