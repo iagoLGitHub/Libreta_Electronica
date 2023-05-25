@@ -11,14 +11,17 @@
     android:background="@color/fondoColor">
 
     <Button
+        android:id="@+id/btnNuevaReserva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nueva Reserva"/>
     <Button
+        android:id="@+id/btnCambiarReserva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cambiar Reserva"/>
     <Button
+        android:id="@+id/btnEliminarReserva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Eliminar Reserva"/>
