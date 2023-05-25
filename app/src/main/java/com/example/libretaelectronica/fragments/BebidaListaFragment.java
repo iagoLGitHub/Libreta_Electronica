@@ -4,12 +4,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -79,7 +77,8 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
         cancelar.setOnClickListener(this);
 
         listaBebidaView.setAdapter(adaptadorBebida);
-        listaBebidaView.setOnItemClickListener(this);listaBebidaView.setClickable(true);
+        listaBebidaView.setOnItemClickListener(this);
+        listaBebidaView.setClickable(true);
         return view;
 
     }
@@ -99,8 +98,7 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        System.out.println("pasa por itemclick");
     }
 }
-
 

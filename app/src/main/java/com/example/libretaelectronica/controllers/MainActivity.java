@@ -7,19 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.libretaelectronica.R;
-import com.example.libretaelectronica.Utilidades;
 import com.example.libretaelectronica.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActivityMainBinding activityMain=ActivityMainBinding.inflate(getLayoutInflater());
-        View view=activityMain.getRoot();
+        ActivityMainBinding activityMain = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = activityMain.getRoot();
         setContentView(view);
 
         activityMain.btnComanda.setOnClickListener(this);
@@ -34,13 +32,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         Intent i;
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.btnComanda:
 
-                    i=new Intent(this, SeleccionarMesa.class);
-                    startActivity(i);
+                i = new Intent(this, SeleccionarMesa.class);
+                startActivity(i);
                 break;
+
+            case R.id.btnReserva:
+                i = new Intent(this, Reserva.class);
+                startActivity(i);
+                break;
+
         }
     }
 }

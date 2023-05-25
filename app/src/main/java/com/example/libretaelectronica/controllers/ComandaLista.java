@@ -11,12 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorComanda;
-import com.example.libretaelectronica.databinding.ActivityListaComandaBinding;
 import com.example.libretaelectronica.fragments.BebidaListaFragment;
+import com.example.libretaelectronica.databinding.ActivityListaComandaBinding;
 import com.example.libretaelectronica.fragments.ComidaListaFragment;
 import com.example.libretaelectronica.fragments.PostreListaFragment;
 import com.example.libretaelectronica.models.Producto;
