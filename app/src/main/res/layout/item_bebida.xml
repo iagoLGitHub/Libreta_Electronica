@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:id="@+id/idLayoutItemBebida">
+
+    <ImageView
+        android:id="@+id/imagenMarcaBebida"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/billete"/>
+
+    <TextView
+        android:id="@+id/nombreItem"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="ItemBebida"
+        android:layout_marginLeft="30dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/imagenMarcaBebida"
+        android:layout_centerVertical="true"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/bebidaPrecioItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_toRightOf="@id/nombreItem"
+        android:textSize="20sp"
+        android:text="0.0"/>
+
+
+
+</RelativeLayout>

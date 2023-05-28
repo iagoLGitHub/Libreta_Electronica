@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorBebida;
@@ -21,7 +22,7 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
 
     ListView listaBebidaView;
     List<Bebida> bebidaLista;
-    Button aceptar,cancelar;
+    Button btnAceptar, btnCancelar;
 
     private List<Producto>listaProductos;
     private static final String ARG_PARAM1 = "param1";
@@ -61,8 +62,8 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_bebida_lista, container, false);
 
         listaBebidaView = view.findViewById(R.id.listaBebida);
-        aceptar = view.findViewById(R.id.btnAceptarListaBebida);
-        cancelar = view.findViewById(R.id.btnCancelarListaBebida);
+        btnAceptar = view.findViewById(R.id.btnAceptarListaBebida);
+        btnCancelar = view.findViewById(R.id.btnCancelarListaBebida);
         bebidaLista = new ArrayList<>();
         Bebida b1 = new Bebida("bebida1", 2);
         Bebida b2 = new Bebida("bebida2", (float) 2.6);
@@ -72,13 +73,12 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
         bebidaLista.add(b2);
         bebidaLista.add(b3);
         bebidaLista.add(b4);
-        AdaptadorBebida adaptadorBebida = new AdaptadorBebida(requireActivity(), R.layout.layoutitem, bebidaLista);
-        aceptar.setOnClickListener(this);
-        cancelar.setOnClickListener(this);
+        AdaptadorBebida adaptadorBebida = new AdaptadorBebida(getActivity(), R.layout.item_bebida, bebidaLista);
+        btnAceptar.setOnClickListener(this);
+        btnCancelar.setOnClickListener(this);
 
         listaBebidaView.setAdapter(adaptadorBebida);
         listaBebidaView.setOnItemClickListener(this);
-        listaBebidaView.setClickable(true);
         return view;
 
     }
@@ -98,7 +98,11 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        System.out.println("pasa por itemclick");
+        Bebida bebida=new Bebida();
+        bebida= (Bebida) parent.getItemAtPosition(position);
+        Toast.makeText(getContext(),bebida.getNombreProducto(),Toast.LENGTH_SHORT).show();
+        String num= String.valueOf(bebida.getPrecioProducto());
+        Toast.makeText(getContext(), num,Toast.LENGTH_SHORT).show();
     }
 }
 

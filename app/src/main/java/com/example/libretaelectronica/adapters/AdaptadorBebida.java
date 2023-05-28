@@ -17,7 +17,7 @@ import com.example.libretaelectronica.models.Producto;
 
 import java.util.List;
 
-public class AdaptadorBebida extends ArrayAdapter<Bebida>{
+public class AdaptadorBebida extends ArrayAdapter<Bebida> {
 
     private Activity context;
     private int layoutListaBebida;
@@ -25,7 +25,7 @@ public class AdaptadorBebida extends ArrayAdapter<Bebida>{
 
     public AdaptadorBebida(@NonNull Activity context,
                            int layout,
-                           List<Bebida>listaBebida) {
+                           List<Bebida> listaBebida) {
 
         super(context, layout, listaBebida);
         this.context = context;
@@ -38,19 +38,23 @@ public class AdaptadorBebida extends ArrayAdapter<Bebida>{
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater layoutInflater=context.getLayoutInflater();
+        LayoutInflater layoutInflater = context.getLayoutInflater();
 
-        View fila=layoutInflater.inflate(layoutListaBebida,null);
-        TextView nombreProducto=fila.findViewById(R.id.nombreItem);
+        View fila = layoutInflater.inflate(layoutListaBebida, null);
+        TextView nombreBebida = fila.findViewById(R.id.nombreItem);
+        TextView precioBebida = fila.findViewById(R.id.bebidaPrecioItem);
 
-        Producto itemBebida=listaBebida.get(position);
+        Bebida itemBebida = listaBebida.get(position);
 
-        nombreProducto.setText(itemBebida.getNombreProducto());
-
+        nombreBebida.setText(itemBebida.getNombreProducto());
+        float precio = itemBebida.getPrecioProducto();
+        String precioString = String.valueOf(precio);
+        precioBebida.setText(precioString);
 
         return fila;
 
     }
+
     @Override
     public boolean isEnabled(int position) {
         return true;

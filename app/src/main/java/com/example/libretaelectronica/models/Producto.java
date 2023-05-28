@@ -4,10 +4,33 @@ public class Producto {
 
     private String nombreProducto;
     private float precioProducto;
+    private int cantidadProducto;
+
+    public Producto() {
+
+    }
+
+
+
 
     public Producto(String nombreProducto, float precioProducto) {
         this.nombreProducto = nombreProducto;
         this.precioProducto = precioProducto;
+        this.cantidadProducto=0;
+    }
+
+    public Producto(String nombreProducto, float precioProducto, int cantidad) {
+        this.nombreProducto = nombreProducto;
+        this.precioProducto = precioProducto;
+        this.cantidadProducto = cantidad;
+    }
+
+    public int getCantidad() {
+        return cantidadProducto;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidadProducto = cantidad;
     }
 
     public String getNombreProducto() {
@@ -26,3 +49,4 @@ public class Producto {
         this.precioProducto = precioProducto;
     }
 }
+

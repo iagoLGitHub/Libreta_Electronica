@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import com.example.libretaelectronica.databinding.ActivityNuevaReservaBinding;
+import com.example.libretaelectronica.models.Reserva;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -41,7 +42,8 @@ public class NuevaReserva extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        Date date;
+        Reserva reserva;
 
         if (v.getId() == nuevaReservaBinding.btnGuardar.getId()) {
             dia = nuevaReservaBinding.datePicker.getDayOfMonth();
@@ -52,14 +54,16 @@ public class NuevaReserva extends AppCompatActivity implements View.OnClickListe
 
                 hora = nuevaReservaBinding.timePicker.getHour();
                 min = nuevaReservaBinding.timePicker.getMinute();
-                System.out.println("dia: " + dia + " mes: " + mes + " anho: " + anho);
-                System.out.println("hora: " + hora + " min: " + min);
+                date=new Date(anho,mes,dia,hora,min);
+                reserva=new Reserva(date,nombreReserva);
+                System.out.println(reserva);
             } else {
 
                 hora = nuevaReservaBinding.timePicker.getCurrentHour();
                 min = nuevaReservaBinding.timePicker.getCurrentMinute();
-                System.out.println("dia: " + dia + " mes: " + mes + " anho: " + anho);
-                System.out.println("hora: " + hora + " min: " + min);
+                date=new Date(anho,mes,dia,hora,min);
+                reserva=new Reserva(date,nombreReserva);
+                System.out.println(reserva);
             }
 
             /**Gestionar Base de datos aqui*/

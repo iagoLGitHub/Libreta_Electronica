@@ -1,10 +1,12 @@
 package com.example.libretaelectronica.controllers;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,21 +16,31 @@ import android.widget.AdapterView;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorComanda;
+import com.example.libretaelectronica.adapters.AdaptadorComida;
 import com.example.libretaelectronica.fragments.BebidaListaFragment;
 import com.example.libretaelectronica.databinding.ActivityListaComandaBinding;
 import com.example.libretaelectronica.fragments.ComidaListaFragment;
 import com.example.libretaelectronica.fragments.PostreListaFragment;
+import com.example.libretaelectronica.models.Comida;
 import com.example.libretaelectronica.models.Producto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class ComandaLista extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     List<Producto> productoLista;
+    List<Comida>comidaLista;
     ActivityListaComandaBinding comandaBinding;
-
-
+    ComidaListaFragment fragmentComida = new ComidaListaFragment();
+    BebidaListaFragment fragmentBebida=new BebidaListaFragment();
+    PostreListaFragment fragmentPostre=new PostreListaFragment();
+    AdaptadorComanda adaptadorPersonalizado;
+    Map<String, Producto> productosExistentes = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.btnComida.setOnClickListener(this);
         comandaBinding.btnBebida.setOnClickListener(this);
         comandaBinding.btnPostre.setOnClickListener(this);
+        comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
 
         productoLista=new ArrayList<>();
         Producto p1=new Producto("producto1",2);
@@ -62,7 +75,8 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
                 this, R.layout.layoutitem, productoLista);
 
-//        comandaBinding.listComanda.setAdapter(adaptadorPersonalizado);
+        comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
+
 
 
 
@@ -103,24 +117,74 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
 
              case R.id.btnComida:
-                 ComidaListaFragment fragmentComida = new ComidaListaFragment();
+
                  fragmentTransaction.replace(R.id.listaFragmentPrincipal, fragmentComida);
                  fragmentTransaction.commit();
+                 comandaBinding.listaFragmentPrincipal.setVisibility(View.VISIBLE);
+                 comandaBinding.listaComandaView.setVisibility(View.GONE);
                  break;
 
             case R.id.btnBebida:
-                BebidaListaFragment fragmentBebida=new BebidaListaFragment();
+
                 fragmentTransaction.replace(R.id.listaFragmentPrincipal,fragmentBebida);
                 fragmentTransaction.commit();
+                comandaBinding.listaFragmentPrincipal.setVisibility(View.VISIBLE);
+                comandaBinding.listaComandaView.setVisibility(View.GONE);
                 break;
 
             case R.id.btnPostre:
-                PostreListaFragment fragmentPostre=new PostreListaFragment();
+
                 fragmentTransaction.replace(R.id.listaFragmentPrincipal,fragmentPostre);
                 fragmentTransaction.commit();
+                comandaBinding.listaFragmentPrincipal.setVisibility(View.VISIBLE);
+                comandaBinding.listaComandaView.setVisibility(View.GONE);
                 break;
 
         }
+    }
+
+    public void setComidaLista(List<Comida>comidaListaFragment){
+        comidaLista = comidaListaFragment;
+        System.out.println("pasa por aqui");
+
+        Iterator<Comida> iterator = comidaLista.iterator();
+        while (iterator.hasNext()) {
+            Comida comida = iterator.next();
+            if (comida.getCantidad() > 0) {
+                Producto producto = comida;
+                System.out.println(comida.getCantidad());
+                boolean encontrado = false;
+
+                Iterator<Producto> productoIterator = productoLista.iterator();
+                while (productoIterator.hasNext()) {
+                    Producto p = productoIterator.next();
+                    if (p.getNombreProducto().equals(producto.getNombreProducto())) {
+                        // Actualizar la cantidad del producto existente
+
+                        p.setCantidad(producto.getCantidad());
+                        System.out.println(producto.getCantidad());
+                        System.out.println(p.getCantidad());
+                        encontrado = true;
+                        System.out.println(encontrado);
+                        break;
+                    }
+                }
+
+                if (!encontrado) {
+                    // Agregar el nuevo producto a productoLista
+                    productoLista.add(producto);
+                }
+            }
+            System.out.println("Nombre: " + comida.getNombreProducto() + ", Precio: " + comida.getPrecioProducto());
+        }
+
+        comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
+        comandaBinding.listaComandaView.setVisibility(View.VISIBLE);
+
+        AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
+                this, R.layout.layoutitem, productoLista);
+
+        comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
     }
 
     @Override

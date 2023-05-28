@@ -38,11 +38,19 @@ public class AdaptadorComanda extends ArrayAdapter<Producto>{
         LayoutInflater layoutInflater=context.getLayoutInflater();
 
         View fila=layoutInflater.inflate(layoutPersonalizado,null);
+        TextView cantidadProducto=fila.findViewById(R.id.cantidadItemProducto);
         TextView nombreProducto=fila.findViewById(R.id.nombreItem);
+        TextView precioProducto=fila.findViewById(R.id.productoPrecioItem);
 
         Producto itemProducto=listaProductos.get(position);
+        int cantidad=itemProducto.getCantidad();
+        float precio=itemProducto.getPrecioProducto();
 
+        String cantidadString=String.valueOf(cantidad);
+        String precioString=String.valueOf(precio);
+        cantidadProducto.setText(cantidadString);
         nombreProducto.setText(itemProducto.getNombreProducto());
+        precioProducto.setText(precioString);
 
        return fila;
 

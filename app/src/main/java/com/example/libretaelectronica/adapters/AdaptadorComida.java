@@ -15,6 +15,8 @@ import com.example.libretaelectronica.models.Comida;
 import com.example.libretaelectronica.models.Producto;
 
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class AdaptadorComida extends ArrayAdapter<Comida> {
@@ -40,11 +42,21 @@ public class AdaptadorComida extends ArrayAdapter<Comida> {
         LayoutInflater layoutInflater=context.getLayoutInflater();
 
         View fila=layoutInflater.inflate(layoutListaComida,null);
-        TextView nombreProducto=fila.findViewById(R.id.nombreItem);
+        TextView cantidadComida=fila.findViewById(R.id.cantidadItemComida);
+        TextView nombreComida=fila.findViewById(R.id.nombreItem);
+        TextView precioComida=fila.findViewById(R.id.comidaPrecioItem);
 
-        Producto itemComida=listaComida.get(position);
 
-        nombreProducto.setText(itemComida.getNombreProducto());
+        Comida itemComida=listaComida.get(position);
+        int cantidad=itemComida.getCantidad();
+        float precio=itemComida.getPrecioProducto();
+        String cantidadString=String.valueOf(cantidad);
+        String precioString=String.valueOf(precio);
+
+        cantidadComida.setText(cantidadString);
+        nombreComida.setText(itemComida.getNombreProducto());
+        precioComida.setText(precioString);
+
 
         return fila;
 

@@ -8,7 +8,7 @@
     android:id="@+id/idLayoutItemComida">
 
     <TextView
-        android:id="@+id/cantidadItemProducto"
+        android:id="@+id/cantidadItemComida"
         android:layout_width="50dp"
         android:layout_height="80dp"
         android:text="aaa"
@@ -22,17 +22,17 @@
         android:id="@+id/nombreItem"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:text="Producto"
+        android:text="comida"
         android:gravity="center"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/cantidadItemProducto"
+        android:layout_toRightOf="@id/cantidadItemComida"
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
         android:textSize="30sp"/>
 
 
     <TextView
-        android:id="@+id/productoPrecioItem"
+        android:id="@+id/comidaPrecioItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="right"

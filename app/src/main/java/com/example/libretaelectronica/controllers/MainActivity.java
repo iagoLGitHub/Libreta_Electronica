@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnReserva:
-                i = new Intent(this, GestionReserva.class);
+                i = new Intent(this, ReservaLista.class);
                 startActivity(i);
                 break;
 

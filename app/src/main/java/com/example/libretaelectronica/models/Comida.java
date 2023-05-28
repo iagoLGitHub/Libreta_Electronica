@@ -6,4 +6,12 @@ public class Comida extends Producto {
     }
 
 
+    public Comida() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Comida{}";
+    }
 }
