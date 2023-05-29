@@ -1,6 +1,8 @@
 package com.example.libretaelectronica.models;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable {
 
     private String nombreProducto;
     private float precioProducto;

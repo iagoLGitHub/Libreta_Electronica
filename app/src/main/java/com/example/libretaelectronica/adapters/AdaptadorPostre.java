@@ -38,11 +38,21 @@ public class AdaptadorPostre extends ArrayAdapter<Postre> {
         LayoutInflater layoutInflater=context.getLayoutInflater();
 
         View fila=layoutInflater.inflate(layoutListaPostre,null);
-        TextView nombreProducto=fila.findViewById(R.id.nombreItem);
+        TextView cantidadPostre=fila.findViewById(R.id.cantidadItemPostre);
+        TextView nombrePostre=fila.findViewById(R.id.nombreItem);
+        TextView precioPostre = fila.findViewById(R.id.postrePrecioItem);
 
-        Producto itemComida=listaPostre.get(position);
+        Postre itemPostre=listaPostre.get(position);
 
-        nombreProducto.setText(itemComida.getNombreProducto());
+        int cantidad=itemPostre.getCantidad();
+        float precio=itemPostre.getPrecioProducto();
+        String cantidadString=String.valueOf(cantidad);
+        String precioString = String.valueOf(precio);
+
+
+        nombrePostre.setText(itemPostre.getNombreProducto());
+        cantidadPostre.setText(cantidadString);
+        precioPostre.setText(precioString);
 
         return fila;
 

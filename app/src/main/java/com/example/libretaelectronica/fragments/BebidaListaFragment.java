@@ -1,9 +1,12 @@
 package com.example.libretaelectronica.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +17,19 @@ import android.widget.Toast;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorBebida;
+import com.example.libretaelectronica.adapters.AdaptadorComida;
+import com.example.libretaelectronica.controllers.ComandaLista;
 import com.example.libretaelectronica.models.Bebida;
 import com.example.libretaelectronica.models.Producto;
 import java.util.ArrayList;
 import java.util.List;
 public class BebidaListaFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-    ListView listaBebidaView;
-    List<Bebida> bebidaLista;
-    Button btnAceptar, btnCancelar;
 
-    private List<Producto>listaProductos;
+    private ListView listaBebidaView;
+    private List<Bebida> bebidaLista=new ArrayList<>();
+    private Button btnAceptar, btnCancelar;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -64,15 +69,18 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
         listaBebidaView = view.findViewById(R.id.listaBebida);
         btnAceptar = view.findViewById(R.id.btnAceptarListaBebida);
         btnCancelar = view.findViewById(R.id.btnCancelarListaBebida);
-        bebidaLista = new ArrayList<>();
-        Bebida b1 = new Bebida("bebida1", 2);
-        Bebida b2 = new Bebida("bebida2", (float) 2.6);
-        Bebida b3 = new Bebida("bebida3", (float) 5.1);
-        Bebida b4 = new Bebida("bebida4", (float) 1.3);
-        bebidaLista.add(b1);
-        bebidaLista.add(b2);
-        bebidaLista.add(b3);
-        bebidaLista.add(b4);
+        if(bebidaLista.isEmpty()){
+            bebidaLista = new ArrayList<>();
+            Bebida b1 = new Bebida("bebida1", 2);
+            Bebida b2 = new Bebida("bebida2", (float) 2.6);
+            Bebida b3 = new Bebida("bebida3", (float) 5.1);
+            Bebida b4 = new Bebida("bebida4", (float) 1.3);
+            bebidaLista.add(b1);
+            bebidaLista.add(b2);
+            bebidaLista.add(b3);
+            bebidaLista.add(b4);
+        }
+
         AdaptadorBebida adaptadorBebida = new AdaptadorBebida(getActivity(), R.layout.item_bebida, bebidaLista);
         btnAceptar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
@@ -87,8 +95,11 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnAceptarListaBebida:
-                System.out.println("boton aceptar");
-                break;
+
+            ((ComandaLista)getActivity()).setBebidaLista(bebidaLista);
+            // Finalizar el fragment actual
+                getFragmentManager().beginTransaction().remove(this).commit();
+            break;
             case R.id.btnCancelarListaBebida:
                 System.out.println("boton cancelar");
                 break;
@@ -98,11 +109,29 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Bebida bebida=new Bebida();
+        Bebida bebida;
         bebida= (Bebida) parent.getItemAtPosition(position);
-        Toast.makeText(getContext(),bebida.getNombreProducto(),Toast.LENGTH_SHORT).show();
-        String num= String.valueOf(bebida.getPrecioProducto());
-        Toast.makeText(getContext(), num,Toast.LENGTH_SHORT).show();
+        int cantidad=bebida.getCantidad();
+        bebida.setCantidad(sumaCantidad(cantidad));
+        bebidaLista.set(position,bebida);
+        /**Notifica al adaptador que los datos han cambiado y debe actualizarse*/
+        ((AdaptadorBebida) parent.getAdapter()).notifyDataSetChanged();
+    }
+
+
+
+
+    /**
+     * Metodo que suma la cantidad de un objeto comida
+     * @param cantidad
+     * @return
+     */
+    private int sumaCantidad(int cantidad){
+        cantidad+=1;
+
+        return cantidad;
+
+
     }
 }
 

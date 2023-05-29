@@ -15,6 +15,7 @@ import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.models.Bebida;
 import com.example.libretaelectronica.models.Producto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptadorBebida extends ArrayAdapter<Bebida> {
@@ -41,23 +42,24 @@ public class AdaptadorBebida extends ArrayAdapter<Bebida> {
         LayoutInflater layoutInflater = context.getLayoutInflater();
 
         View fila = layoutInflater.inflate(layoutListaBebida, null);
+        TextView cantidadBebida=fila.findViewById(R.id.cantidadItemBebida);
         TextView nombreBebida = fila.findViewById(R.id.nombreItem);
         TextView precioBebida = fila.findViewById(R.id.bebidaPrecioItem);
 
         Bebida itemBebida = listaBebida.get(position);
+        int cantidad=itemBebida.getCantidad();
+        float precio = itemBebida.getPrecioProducto();
+
+        String cantidadString=String.valueOf(cantidad);
+        String precioString = String.valueOf(precio);
 
         nombreBebida.setText(itemBebida.getNombreProducto());
-        float precio = itemBebida.getPrecioProducto();
-        String precioString = String.valueOf(precio);
+        cantidadBebida.setText(cantidadString);
         precioBebida.setText(precioString);
 
         return fila;
 
     }
 
-    @Override
-    public boolean isEnabled(int position) {
-        return true;
-    }
 
 }

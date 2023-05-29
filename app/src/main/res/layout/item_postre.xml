@@ -8,7 +8,7 @@
     android:id="@+id/idLayoutItemBebida">
 
     <TextView
-        android:id="@+id/cantidadItemBebida"
+        android:id="@+id/cantidadItemPostre"
         android:layout_width="50dp"
         android:layout_height="80dp"
         android:text="aaa"
@@ -19,28 +19,28 @@
         android:textSize="30sp"/>
 
     <ImageView
-        android:id="@+id/imagenMarcaBebida"
+        android:id="@+id/imagenPostre"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="30dp"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/cantidadItemBebida"
-        android:src="@drawable/billete"/>
+        android:layout_toRightOf="@+id/cantidadItemPostre"
+        android:src="@drawable/taza"/>
 
     <TextView
         android:id="@+id/nombreItem"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="ItemBebida"
+        android:text="ItemPostre"
         android:layout_marginLeft="30dp"
         android:gravity="center_vertical"
         android:textColor="@color/black"
-        android:layout_toRightOf="@+id/imagenMarcaBebida"
+        android:layout_toRightOf="@+id/imagenPostre"
         android:layout_centerVertical="true"
         android:textSize="25sp"/>
 
     <TextView
-        android:id="@+id/bebidaPrecioItem"
+        android:id="@+id/postrePrecioItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"

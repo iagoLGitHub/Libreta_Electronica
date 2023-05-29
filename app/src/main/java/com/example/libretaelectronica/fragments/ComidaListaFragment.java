@@ -1,10 +1,16 @@
 package com.example.libretaelectronica.fragments;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +27,7 @@ import com.example.libretaelectronica.models.Producto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ComidaListaFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -55,6 +62,7 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
             mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
+
     }
 
     @Override
@@ -72,10 +80,10 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
         // Verificar si la lista de comida ya contiene elementos
         if (comidaLista.isEmpty()) {
             // La lista está vacía, crear y agregar elementos
-            Comida c1 = new Comida("comida1", 1);
-            Comida c2 = new Comida("comida2", (float) 3);
-            Comida c3 = new Comida("comida3", (float) 6.30);
-            Comida c4 = new Comida("comida4", (float) 10.30);
+            Comida c1 = new Comida("comida1", 1,"ingrediente1,ingrediente2,ingrediente3");
+            Comida c2 = new Comida("comida2", (float) 3,"ingrediente 7,ingrediente1,ingrediente3");
+            Comida c3 = new Comida("comida3", (float) 6.30,"ingrediente 7,ingrediente1,ingrediente2");
+            Comida c4 = new Comida("comida4", (float) 10.30,"ingrediente 9,ingrediente11,ingrediente1");
             comidaLista.add(c1);
             comidaLista.add(c2);
             comidaLista.add(c3);
@@ -88,12 +96,48 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
         btnCancelar.setOnClickListener(this);
         listaComidaView.setAdapter(adaptadorComida);
         listaComidaView.setOnItemClickListener(this);
-
+        registerForContextMenu(listaComidaView);
 
         return view;
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
 
+        requireActivity().getMenuInflater().inflate(R.menu.menu_context_listacomida, menu);
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        // Obtener el ContextMenuInfo
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        // Obtener la posición del elemento seleccionado
+        int position = info.position;
+
+          Comida comidaSeleccionada = comidaLista.get(position);
+
+
+
+
+        switch (item.getItemId()) {
+            case R.id.item_ingrediente:
+                // Acción cuando se selecciona "Ingredientes"
+                String nombreComida=comidaSeleccionada.getNombreProducto();
+                String ingredientes = comidaSeleccionada.getIngredientes();
+                mensajeIngredientes(nombreComida,ingredientes);
+                Toast.makeText(getActivity(), "Ingredientes de " + ingredientes, Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    /**
+     * Escuchador de los botones Aceptar y Cancelar
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 
@@ -113,6 +157,27 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    /**
+     * Ventana Dialog que recibe el nombreComida e ingredientes de la comida seleccionada
+     * @param nombreComida
+     * @param ingredientes
+     */
+    public void mensajeIngredientes(String nombreComida,String ingredientes){
+
+        AlertDialog.Builder ventana = new AlertDialog.Builder(getActivity());
+        ventana.setTitle(nombreComida);
+        ventana.setMessage(ingredientes);
+        ventana.setIcon(R.drawable.comanda);
+        ventana.show();
+    }
+
+    /**
+     * Escuchador del itemclick de listaComida
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Comida comida;
@@ -128,6 +193,12 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
 
 
    }
+
+    /**
+     * Metodo que suma cuando se hace
+     * @param cantidad
+     * @return
+     */
    private int sumaCantidad(int cantidad){
         cantidad+=1;
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:id="@+id/idLayoutItemComida">
+
+
+
+    <TextView
+        android:id="@+id/nombreItemCobro"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Producto"
+        android:gravity="fill_vertical"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/productoPrecioCobroItem"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@id/nombreItemCobro"
+        android:textSize="30sp"
+        android:text="0.0"/>
+
+    <TextView
+        android:id="@+id/x"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/productoPrecioCobroItem"
+        android:textSize="30sp"
+        android:text="X"/>
+
+
+    <TextView
+        android:id="@+id/cantidadItemProductoCobro"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="aaa"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/x"
+        android:textColor="@color/black"
+        android:textSize="30sp"/>
+
+
+
+</RelativeLayout>
