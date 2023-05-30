@@ -2,12 +2,14 @@ package com.example.libretaelectronica.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorCobro;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Cobrar extends AppCompatActivity {
+public class Cobrar extends AppCompatActivity implements View.OnClickListener{
     ActivityCobrarBinding cobrarBinding;
     ArrayList<Producto> listaProducto = new ArrayList<>();
 
@@ -34,7 +36,8 @@ public class Cobrar extends AppCompatActivity {
 
         listaProducto = (ArrayList<Producto>) getIntent().getSerializableExtra("lista");
 
-
+        cobrarBinding.btnCobrarAceptar.setOnClickListener(this);
+        cobrarBinding.btnCobrarCancelar.setOnClickListener(this);
         cobrarBinding.numeroMesa.setText(numeroMesa);
         AdaptadorCobro adaptadorCobro = new AdaptadorCobro(this, R.layout.item_cobro, listaProducto);
         cobrarBinding.listaFactura.setAdapter(adaptadorCobro);
@@ -69,5 +72,22 @@ public class Cobrar extends AppCompatActivity {
         DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Define el formato con dos decimales
         String formattedNumber = decimalFormat.format(numero);
         return Float.parseFloat(formattedNumber);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnCobrarAceptar:
+                Intent i=new Intent();
+                String mensaje="Cobro realizado con Exito";
+                i.putExtra("mensaje",mensaje);
+                setResult(RESULT_OK,i);
+                finish();
+                break;
+
+            case R.id.btnCobrarCancelar:
+                finish();
+                break;
+        }
     }
 }

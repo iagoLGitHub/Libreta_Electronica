@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorComanda;
@@ -78,6 +79,12 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -86,7 +93,28 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         if (requestCode == REQUESTCOMANDA) {
             // comprueba si el codigo del resultado es OK
             if (resultCode == RESULT_OK){
-                productoLista.clear();
+                String mensaje=data.getStringExtra("mensaje");
+                Toast.makeText(this, mensaje,
+                        Toast.LENGTH_SHORT).show();
+                if(!(productoLista==null)){
+                    productoLista.clear();
+                }
+                if(!(comidaLista==null)){
+                    comidaLista.clear();
+                }
+                if(!(bebidaLista==null)){
+                    bebidaLista.clear();
+                }
+                if(!(postreLista==null)){
+                   postreLista.clear();
+                }
+                AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
+                        this, R.layout.layoutitem, productoLista);
+
+                comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
+
+
+            }else{
 
             }
     }
@@ -110,9 +138,9 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent();
                 i.setClassName("com.android.calculator2", "com.android.calculator2.Calculator");
                 startActivity(i);
+
                 return true;
             case R.id.menuCobro:
-                System.out.println("menuCobro");
                 if(!productoLista.isEmpty()){
                     Intent intentCobro=new Intent(this,Cobrar.class);
                     intentCobro.putExtra("mesa",textoMesa);
