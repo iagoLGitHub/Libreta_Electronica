@@ -2,7 +2,9 @@ package com.example.libretaelectronica.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.libretaelectronica.Dao.ControladorBbdd;
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorCobro;
 import com.example.libretaelectronica.databinding.ActivityCobrarBinding;
@@ -24,6 +27,8 @@ import java.util.List;
 public class Cobrar extends AppCompatActivity implements View.OnClickListener{
     ActivityCobrarBinding cobrarBinding;
     ArrayList<Producto> listaProducto = new ArrayList<>();
+    private String numeroMesa="";
+    float resbbdd= 0.0F;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,7 @@ public class Cobrar extends AppCompatActivity implements View.OnClickListener{
         cobrarBinding = ActivityCobrarBinding.inflate(getLayoutInflater());
         View view = cobrarBinding.getRoot();
         setContentView(view);
-        String numeroMesa = getIntent().getStringExtra("mesa");
+        numeroMesa = getIntent().getStringExtra("mesa");
 
         listaProducto = (ArrayList<Producto>) getIntent().getSerializableExtra("lista");
 
@@ -42,6 +47,7 @@ public class Cobrar extends AppCompatActivity implements View.OnClickListener{
         AdaptadorCobro adaptadorCobro = new AdaptadorCobro(this, R.layout.item_cobro, listaProducto);
         cobrarBinding.listaFactura.setAdapter(adaptadorCobro);
         calculoTotal(listaProducto);
+
     }
 
     private void calculoTotal(ArrayList<Producto>listaProducto){
@@ -57,6 +63,7 @@ public class Cobrar extends AppCompatActivity implements View.OnClickListener{
         }
 
         float resultadoLimitado=limiteFloat(resultado);
+        resbbdd=resultadoLimitado;
         String textoTotal=String.valueOf(resultadoLimitado);
         cobrarBinding.totalCobro.setText(textoTotal);
     }
@@ -82,6 +89,7 @@ public class Cobrar extends AppCompatActivity implements View.OnClickListener{
                 String mensaje="Cobro realizado con Exito";
                 i.putExtra("mensaje",mensaje);
                 setResult(RESULT_OK,i);
+                insertar();
                 finish();
                 break;
 
@@ -89,5 +97,19 @@ public class Cobrar extends AppCompatActivity implements View.OnClickListener{
                 finish();
                 break;
         }
+    }
+
+
+    private void insertar(){
+        ControladorBbdd bbdd = new ControladorBbdd(this);
+        SQLiteDatabase bd = bbdd.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("numero_mesa",numeroMesa);
+        System.out.println(numeroMesa);
+        contentValues.put("cantidad_factura",resbbdd);
+        System.out.println(resbbdd);
+        bd.insert("facturas",null,contentValues);
+
+
     }
 }

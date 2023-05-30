@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:id="@+id/idLayoutItemFactura">
+
+
+    <TextView
+        android:id="@+id/numeroMesa"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Mesa"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        android:textSize="30sp"/>
+
+
+    <TextView
+        android:id="@+id/totalView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="left"
+        android:layout_toRightOf="@id/numeroMesa"
+        android:textSize="30sp"
+        android:text="0.0"/>
+
+</RelativeLayout>

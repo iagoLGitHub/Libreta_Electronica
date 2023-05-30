@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         activityMain.btnComanda.setOnClickListener(this);
         activityMain.btnReserva.setOnClickListener(this);
         activityMain.btnAlmacen.setOnClickListener(this);
-        activityMain.btnCobro.setOnClickListener(this);
+        activityMain.btnFacturas.setOnClickListener(this);
 
 
     }
@@ -42,6 +42,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnReserva:
                 i = new Intent(this, ReservaLista.class);
+                startActivity(i);
+                break;
+
+            case R.id.btnAlmacen:
+                i=new Intent(this,GestionProducto.class);
+                startActivity(i);
+                break;
+
+            case R.id.btnFacturas:
+                i=new Intent(this,listaFacturas.class);
                 startActivity(i);
                 break;
 
