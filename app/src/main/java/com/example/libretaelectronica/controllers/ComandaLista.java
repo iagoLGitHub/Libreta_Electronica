@@ -268,35 +268,38 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
 
 
-    public void setComidaLista(List<Comida>comidaListaFragment){
-        comidaLista = comidaListaFragment;
+    public void setComidaLista(List<Comida>comidaListaFragment,boolean aceptar){
 
-        Iterator<Comida> iterator = comidaLista.iterator();
-        while (iterator.hasNext()) {
-            Comida comida = iterator.next();
-            if (comida.getCantidad() > 0) {
-                Producto producto = comida;
-                System.out.println(comida.getCantidad());
-                boolean encontrado = false;
+        if(aceptar) {
+            comidaLista = comidaListaFragment;
 
-                Iterator<Producto> productoIterator = productoLista.iterator();
-                while (productoIterator.hasNext()) {
-                    Producto p = productoIterator.next();
-                    if (p.getNombreProducto().equals(producto.getNombreProducto())) {
-                        // Actualizar la cantidad del producto existente
+            Iterator<Comida> iterator = comidaLista.iterator();
+            while (iterator.hasNext()) {
+                Comida comida = iterator.next();
+                if (comida.getCantidad() > 0) {
+                    Producto producto = comida;
+                    System.out.println(comida.getCantidad());
+                    boolean encontrado = false;
 
-                        p.setCantidad(producto.getCantidad());
-                        encontrado = true;
-                        break;
+                    Iterator<Producto> productoIterator = productoLista.iterator();
+                    while (productoIterator.hasNext()) {
+                        Producto p = productoIterator.next();
+                        if (p.getNombreProducto().equals(producto.getNombreProducto())) {
+                            // Actualizar la cantidad del producto existente
+
+                            p.setCantidad(producto.getCantidad());
+                            encontrado = true;
+                            break;
+                        }
+                    }
+
+                    if (!encontrado) {
+                        // Agregar el nuevo producto a productoLista
+                        productoLista.add(producto);
                     }
                 }
-
-                if (!encontrado) {
-                    // Agregar el nuevo producto a productoLista
-                    productoLista.add(producto);
-                }
+                System.out.println("Nombre: " + comida.getNombreProducto() + ", Precio: " + comida.getPrecioProducto());
             }
-            System.out.println("Nombre: " + comida.getNombreProducto() + ", Precio: " + comida.getPrecioProducto());
         }
 
         comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);

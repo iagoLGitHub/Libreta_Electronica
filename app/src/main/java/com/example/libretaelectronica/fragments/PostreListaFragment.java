@@ -1,5 +1,7 @@
 package com.example.libretaelectronica.fragments;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,11 +13,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.libretaelectronica.Dao.ControladorBbdd;
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorBebida;
 import com.example.libretaelectronica.adapters.AdaptadorPostre;
 import com.example.libretaelectronica.controllers.ComandaLista;
 import com.example.libretaelectronica.models.Bebida;
+import com.example.libretaelectronica.models.Comida;
 import com.example.libretaelectronica.models.Postre;
 
 import java.util.ArrayList;
@@ -65,17 +69,8 @@ public class PostreListaFragment extends Fragment implements View.OnClickListene
         btnCancelar = view.findViewById(R.id.btnAceptarListaPostre);
 
         if(postreLista.isEmpty()){
-            postreLista=new ArrayList<>();
-            Postre p1=new Postre("Postre1",2);
-            Postre p2=new Postre("Postre2",(float) 2.6);
-            Postre p3=new Postre("Postre3",(float) 5.1);
-            Postre p4=new Postre("Postre4",(float) 1.3);
 
-            postreLista.add(p1);
-            postreLista.add(p2);
-            postreLista.add(p3);
-            postreLista.add(p4);
-
+            busquedaPostre();
         }
 
 
@@ -86,8 +81,6 @@ public class PostreListaFragment extends Fragment implements View.OnClickListene
         btnCancelar.setOnClickListener(this);
         listaPostreView.setAdapter(adaptadorPostre);
         listaPostreView.setOnItemClickListener(this);
-
-
 
         return view;
     }
@@ -102,6 +95,7 @@ public class PostreListaFragment extends Fragment implements View.OnClickListene
                 getFragmentManager().beginTransaction().remove(this).commit();
                 break;
             case R.id.btnCancelarListaBebida:
+                ((ComandaLista)getActivity()).setPostreLista(postreLista);
                 System.out.println("boton cancelar");
                 break;
 
@@ -131,5 +125,25 @@ public class PostreListaFragment extends Fragment implements View.OnClickListene
         return cantidad;
 
 
+    }
+    private void busquedaPostre(){
+        ControladorBbdd bbdd = new ControladorBbdd(getActivity());
+        SQLiteDatabase db = bbdd.getReadableDatabase();
+
+        System.out.println(db.isOpen());
+
+        String busqueda = "select * from 'postres'";
+        System.out.println(busqueda);
+        Cursor c=db.rawQuery(busqueda,null);
+
+        if (c.moveToFirst()) {
+            do {
+                Postre postre = new Postre(c.getString(0), c.getFloat(1));
+                postreLista.add(postre);
+            } while (c.moveToNext());
+        } else {
+        }
+
+        c.close();
     }
 }

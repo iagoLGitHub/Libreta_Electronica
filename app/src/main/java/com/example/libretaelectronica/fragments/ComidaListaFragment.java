@@ -2,6 +2,8 @@ package com.example.libretaelectronica.fragments;
 
 import android.app.AlertDialog;
 import android.content.ClipData;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.libretaelectronica.Dao.ControladorBbdd;
 import com.example.libretaelectronica.R;
 import com.example.libretaelectronica.adapters.AdaptadorComida;
 import com.example.libretaelectronica.controllers.ComandaLista;
 import com.example.libretaelectronica.models.Bebida;
 import com.example.libretaelectronica.models.Comida;
+import com.example.libretaelectronica.models.Factura;
 import com.example.libretaelectronica.models.Producto;
 
 import java.util.ArrayList;
@@ -79,15 +83,8 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
 
         // Verificar si la lista de comida ya contiene elementos
         if (comidaLista.isEmpty()) {
-            // La lista está vacía, crear y agregar elementos
-            Comida c1 = new Comida("comida1", 1,"ingrediente1,ingrediente2,ingrediente3");
-            Comida c2 = new Comida("comida2", (float) 3,"ingrediente 7,ingrediente1,ingrediente3");
-            Comida c3 = new Comida("comida3", (float) 6.30,"ingrediente 7,ingrediente1,ingrediente2");
-            Comida c4 = new Comida("comida4", (float) 10.30,"ingrediente 9,ingrediente11,ingrediente1");
-            comidaLista.add(c1);
-            comidaLista.add(c2);
-            comidaLista.add(c3);
-            comidaLista.add(c4);
+
+            busquedaComidas();
         }
 
         AdaptadorComida adaptadorComida = new AdaptadorComida(
@@ -140,17 +137,18 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
      */
     @Override
     public void onClick(View v) {
-
+        boolean acepta=true;
         switch (v.getId()) {
+
             case R.id.btnAceptarListaComida:
-                ((ComandaLista)getActivity()).setComidaLista(comidaLista);
-                for(Comida comida:comidaLista){
-                    System.out.println(comida.getCantidad());
-                }
+
+                ((ComandaLista)getActivity()).setComidaLista(comidaLista,acepta);
                 getFragmentManager().beginTransaction().remove(this).commit();
                 System.out.println("boton aceptar");
                 break;
             case R.id.btnCancelarListaComida:
+                acepta=false;
+                ((ComandaLista)getActivity()).setComidaLista(comidaLista,acepta);
                 System.out.println("boton cancelar");
                 break;
 
@@ -206,4 +204,26 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
 
 
    }
+
+    private void busquedaComidas(){
+        ControladorBbdd bbdd = new ControladorBbdd(getActivity());
+        SQLiteDatabase db = bbdd.getReadableDatabase();
+
+        System.out.println(db.isOpen());
+
+        String busqueda = "select * from 'comidas'";
+        System.out.println(busqueda);
+        Cursor c=db.rawQuery(busqueda,null);
+
+        if (c.moveToFirst()) {
+            do {
+                Comida comida = new Comida(c.getString(0), c.getFloat(1),c.getString(2));
+                comidaLista.add(comida);
+            } while (c.moveToNext());
+        } else {
+            System.out.println("No se encontraron facturas");
+        }
+
+        c.close();
+    }
 }

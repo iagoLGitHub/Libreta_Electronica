@@ -17,7 +17,7 @@
         android:gravity="fill_vertical"
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
-        android:textSize="30sp"/>
+        android:textSize="15sp"/>
 
     <TextView
         android:id="@+id/productoPrecioCobroItem"

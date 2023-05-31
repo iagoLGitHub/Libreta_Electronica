@@ -68,65 +68,65 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()){
 
             case R.id.btnMesa1:
-                texto="Mesa 1";
+                texto=getString(R.string.mesa1);
                 i.putExtra("texto",texto);
                 startActivityForResult(i, Utilidades.MESABTN1);
                 break;
 
             case R.id.btnMesa2:
-                texto="Mesa 2";
+                texto=getString(R.string.mesa2);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN2);
                 break;
 
             case R.id.btnMesa3:
-                texto="Mesa 3";
+                texto=getString(R.string.mesa3);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN3);
                 break;
             case R.id.btnMesa4:
-                texto="Mesa 4";
+                texto=getString(R.string.mesa4);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN4);;
                 break;
 
             case R.id.btnMesa5:
-                texto="Mesa 5";
+                texto=getString(R.string.mesa5);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN5);
                 break;
             case R.id.btnMesa6:
-                texto="Mesa 6";
+                texto=getString(R.string.mesa6);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN6);
                 break;
             case R.id.btnMesa7:
-                texto="Mesa 7";
+                texto=getString(R.string.mesa7);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN7);
                 break;
             case R.id.btnMesa8:
-                texto="Mesa 8";
+                texto=getString(R.string.mesa8);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN8);
                 break;
             case R.id.btnMesa9:
-                texto="Mesa 9";
+                texto=getString(R.string.mesa9);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN9);
                 break;
             case R.id.btnMesa10:
-                texto="Mesa 10";
+                texto=getString(R.string.mesa10);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN10);
                 break;
             case R.id.btnMesa11:
-                texto="Mesa 11";
+                texto=getString(R.string.mesa11);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN11);
                 break;
             case R.id.btnMesa12:
-                texto="Mesa 12";
+                texto=getString(R.string.mesa12);
                 i.putExtra("texto",texto);
                 startActivityForResult(i,Utilidades.MESABTN12);
                 break;

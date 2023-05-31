@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">LibretaElectronica</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancel</string>
+    <string name="mesa1">Mesa 1</string>
+    <string name="mesa2">Mesa 2</string>
+    <string name="mesa3">Mesa 3</string>
+    <string name="mesa4">Mesa 4</string>
+    <string name="mesa5">Mesa 5</string>
+    <string name="mesa6">Mesa 6</string>
+    <string name="mesa7">Mesa 7</string>
+    <string name="mesa8">Mesa 8</string>
+    <string name="mesa9">Mesa 9</string>
+    <string name="mesa10">Mesa 10</string>
+    <string name="mesa11">Mesa 11</string>
+    <string name="mesa12">Mesa 12</string>
+
+</resources>

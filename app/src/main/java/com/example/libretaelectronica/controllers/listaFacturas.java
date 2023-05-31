@@ -42,13 +42,15 @@ public class listaFacturas extends AppCompatActivity {
         System.out.println(busqueda);
         Cursor c=db.rawQuery(busqueda,null);
 
-        if(c.moveToFirst()){
-           Factura factura=new Factura(c.getString(1),c.getFloat(2));
-
-
-            listaFacturas.add(factura);
-        }else{
-            System.out.println("no se encontro nada");
+        if (c.moveToFirst()) {
+            do {
+                Factura factura = new Factura(c.getString(1), c.getFloat(2));
+                listaFacturas.add(factura);
+            } while (c.moveToNext());
+        } else {
+            System.out.println("No se encontraron facturas");
         }
+
+        c.close(); 
     }
 }
