@@ -66,7 +66,7 @@ public class PostreListaFragment extends Fragment implements View.OnClickListene
 
         listaPostreView = view.findViewById(R.id.listaPostre);
         btnAceptar = view.findViewById(R.id.btnAceptarListaPostre);
-        btnCancelar = view.findViewById(R.id.btnAceptarListaPostre);
+        btnCancelar = view.findViewById(R.id.btnCancelarListaPostre);
 
         if(postreLista.isEmpty()){
 
@@ -90,13 +90,15 @@ public class PostreListaFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.btnAceptarListaPostre:
 
-                ((ComandaLista)getActivity()).setPostreLista(postreLista);
-                // Finalizar el fragment actual
+                ((ComandaLista)getActivity()).setPostreLista(postreLista,true);
+
                 getFragmentManager().beginTransaction().remove(this).commit();
+                postreLista.clear();
                 break;
-            case R.id.btnCancelarListaBebida:
-                ((ComandaLista)getActivity()).setPostreLista(postreLista);
-                System.out.println("boton cancelar");
+            case R.id.btnCancelarListaPostre:
+                postreLista.clear();
+                ((ComandaLista)getActivity()).setPostreLista(postreLista,false);
+                getFragmentManager().beginTransaction().remove(this).commit();
                 break;
 
         }

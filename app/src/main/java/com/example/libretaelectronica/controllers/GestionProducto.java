@@ -60,11 +60,6 @@ public class GestionProducto extends AppCompatActivity implements AdapterView.On
 
 
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.menu_gestion_context, menu);
-    }
 
 
     @Override

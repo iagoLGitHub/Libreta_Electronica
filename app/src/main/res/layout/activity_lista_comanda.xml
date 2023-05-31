@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/fondoColor">
+    android:background="@color/fondoColor"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,21 +16,22 @@
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_weight="1"
-            android:scaleType="centerInside"
             android:background="@color/botonesInferiores"
-            android:src="@drawable/back"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/back" />
 
         <TextView
             android:id="@+id/textoCabecera"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="6"
+            android:gravity="center_horizontal"
             android:text="Mesa"
-            android:textSize="50dp"
-            android:gravity="center_horizontal"/>
+            android:textSize="50dp" />
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -38,27 +39,29 @@
         android:orientation="vertical">
 
         <FrameLayout
+
             android:id="@+id/listaFragmentPrincipal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
 
         <ListView
             android:id="@+id/listaComandaView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/botonesInferiores"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
+        android:background="@drawable/efecto_menu"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:background="@drawable/efecto_menu">
+        android:paddingTop="10dp">
 
         <ImageButton
             android:id="@+id/btnComida"
@@ -75,20 +78,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="bebida"
-            android:src="@drawable/bebida"
+            android:background="@drawable/botones_inferiores_lista"
             android:scaleType="centerInside"
-            android:background="@drawable/botones_inferiores_lista"/>
+            android:src="@drawable/bebida"
+            android:text="bebida" />
 
         <ImageButton
             android:id="@+id/btnPostre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="bebida"
-            android:src="@drawable/taza"
+            android:background="@drawable/botones_inferiores_lista"
             android:scaleType="centerInside"
-            android:background="@drawable/botones_inferiores_lista"/>
+            android:src="@drawable/taza"
+            android:text="bebida" />
     </LinearLayout>
 
 

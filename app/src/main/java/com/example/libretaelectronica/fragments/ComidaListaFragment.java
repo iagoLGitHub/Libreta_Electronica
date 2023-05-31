@@ -86,15 +86,13 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
 
             busquedaComidas();
         }
-
         AdaptadorComida adaptadorComida = new AdaptadorComida(
                 getActivity(), R.layout.item_comida, comidaLista);
         btnAceptar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
-        listaComidaView.setAdapter(adaptadorComida);
         listaComidaView.setOnItemClickListener(this);
+        listaComidaView.setAdapter(adaptadorComida);
         registerForContextMenu(listaComidaView);
-
         return view;
     }
 
@@ -116,8 +114,6 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
           Comida comidaSeleccionada = comidaLista.get(position);
 
 
-
-
         switch (item.getItemId()) {
             case R.id.item_ingrediente:
                 // Acción cuando se selecciona "Ingredientes"
@@ -128,6 +124,7 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
                 return true;
             default:
                 return super.onContextItemSelected(item);
+
         }
     }
 
@@ -137,19 +134,18 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
      */
     @Override
     public void onClick(View v) {
-        boolean acepta=true;
         switch (v.getId()) {
 
             case R.id.btnAceptarListaComida:
 
-                ((ComandaLista)getActivity()).setComidaLista(comidaLista,acepta);
+                ((ComandaLista)getActivity()).setComidaLista(comidaLista,true);
                 getFragmentManager().beginTransaction().remove(this).commit();
-                System.out.println("boton aceptar");
+                comidaLista.clear();
                 break;
             case R.id.btnCancelarListaComida:
-                acepta=false;
-                ((ComandaLista)getActivity()).setComidaLista(comidaLista,acepta);
-                System.out.println("boton cancelar");
+                comidaLista.clear();
+                ((ComandaLista)getActivity()).setComidaLista(comidaLista,false);
+                getFragmentManager().beginTransaction().remove(this).commit();
                 break;
 
         }
@@ -221,7 +217,7 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
                 comidaLista.add(comida);
             } while (c.moveToNext());
         } else {
-            System.out.println("No se encontraron facturas");
+            System.out.println("No se encontraron comidas");
         }
 
         c.close();

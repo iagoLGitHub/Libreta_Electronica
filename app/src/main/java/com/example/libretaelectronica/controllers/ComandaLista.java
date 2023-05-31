@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,16 +33,17 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ComandaLista extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    public final static int REQUESTCOMANDA=100;
+    public final static int REQUESTCOMANDA = 100;
     ArrayList<Producto> productoLista;
-    List<Comida>comidaLista;
-    List<Bebida>bebidaLista;
-    List<Postre>postreLista;
+    List<Comida> comidaLista;
+    List<Bebida> bebidaLista;
+    List<Postre> postreLista;
     ActivityListaComandaBinding comandaBinding;
     ComidaListaFragment fragmentComida = new ComidaListaFragment();
-    BebidaListaFragment fragmentBebida=new BebidaListaFragment();
-    PostreListaFragment fragmentPostre=new PostreListaFragment();
-    private String textoMesa="";
+    BebidaListaFragment fragmentBebida = new BebidaListaFragment();
+    PostreListaFragment fragmentPostre = new PostreListaFragment();
+    AdaptadorComanda adaptadorPersonalizado;
+    private String textoMesa = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +51,11 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_lista_comanda);
 
         /**creamos un nuevo objeto binding**/
-        comandaBinding= ActivityListaComandaBinding.inflate(getLayoutInflater());
-        View view=comandaBinding.getRoot();
+        comandaBinding = ActivityListaComandaBinding.inflate(getLayoutInflater());
+        View view = comandaBinding.getRoot();
         setContentView(view);
         /**Recogemos el intent enviado desde la clase seleccionarMesa*/
-        textoMesa=getIntent().getStringExtra("texto");
+        textoMesa = getIntent().getStringExtra("texto");
         comandaBinding.textoCabecera.setText(textoMesa);
 
         /**Asignamos los escuchadores*/
@@ -65,22 +67,21 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
 
 
-        if(productoLista==null){
-            productoLista=new ArrayList<>();
+        if (productoLista == null) {
+            productoLista = new ArrayList<>();
         }
 
-        AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
+        adaptadorPersonalizado = new AdaptadorComanda(
                 this, R.layout.layoutitem, productoLista);
 
         comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
 
-
+        registerForContextMenu(comandaBinding.listaComandaView);
 
 
     }
 
     /**
-     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -92,21 +93,21 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
         if (requestCode == REQUESTCOMANDA) {
             // comprueba si el codigo del resultado es OK
-            if (resultCode == RESULT_OK){
-                String mensaje=data.getStringExtra("mensaje");
+            if (resultCode == RESULT_OK) {
+                String mensaje = data.getStringExtra("mensaje");
                 Toast.makeText(this, mensaje,
                         Toast.LENGTH_SHORT).show();
-                if(!(productoLista==null)){
+                if (!(productoLista == null)) {
                     productoLista.clear();
                 }
-                if(!(comidaLista==null)){
+                if (!(comidaLista == null)) {
                     comidaLista.clear();
                 }
-                if(!(bebidaLista==null)){
+                if (!(bebidaLista == null)) {
                     bebidaLista.clear();
                 }
-                if(!(postreLista==null)){
-                   postreLista.clear();
+                if (!(postreLista == null)) {
+                    postreLista.clear();
                 }
                 AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
                         this, R.layout.layoutitem, productoLista);
@@ -114,10 +115,10 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                 comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
 
 
-            }else{
+            } else {
 
             }
-    }
+        }
     }
 
     @Override
@@ -127,8 +128,47 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         return true;
 
     }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_context_producto, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+
+        Producto p = productoLista.get(position);
+        System.out.println(p.getNombreProducto());
+
+        switch (item.getItemId()) {
+            case R.id.editar:
+                // Acción para el elemento "Editar"
+                return true;
+
+            case R.id.eliminar:
+                // Acción para el elemento "Eliminar"
+                System.out.println("pasa por aqui");
+                productoLista.remove(position);
+                adaptadorPersonalizado = new AdaptadorComanda(
+                        this, R.layout.layoutitem, productoLista);
+                comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
+                String texto=getString(R.string.accionEliminar);
+                adaptadorPersonalizado.notifyDataSetChanged();
+                Toast.makeText(this, texto + p.getNombreProducto(), Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+
     /**
-     * El boton de calculadora nos hara una llamada del sistema para que nos llevara a la aplicación calculadora*/
+     * El boton de calculadora nos hara una llamada del sistema para que nos llevara a la aplicación calculadora
+     */
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -141,11 +181,11 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
                 return true;
             case R.id.menuCobro:
-                if(!productoLista.isEmpty()){
-                    Intent intentCobro=new Intent(this,Cobrar.class);
-                    intentCobro.putExtra("mesa",textoMesa);
+                if (!productoLista.isEmpty()) {
+                    Intent intentCobro = new Intent(this, Cobrar.class);
+                    intentCobro.putExtra("mesa", textoMesa);
                     intentCobro.putExtra("lista", productoLista);
-                    startActivityForResult(intentCobro,REQUESTCOMANDA);
+                    startActivityForResult(intentCobro, REQUESTCOMANDA);
                 }
                 return true;
             default:
@@ -157,18 +197,18 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        switch (v.getId()){
+        switch (v.getId()) {
 
-             case R.id.btnComida:
+            case R.id.btnComida:
 
-                 fragmentTransaction.replace(R.id.listaFragmentPrincipal, fragmentComida);
-                 fragmentTransaction.commit();
-                 comandaBinding.listaFragmentPrincipal.setVisibility(View.VISIBLE);
-                 comandaBinding.listaComandaView.setVisibility(View.GONE);
-                 break;
+                fragmentTransaction.replace(R.id.listaFragmentPrincipal, fragmentComida);
+                fragmentTransaction.commit();
+                comandaBinding.listaFragmentPrincipal.setVisibility(View.VISIBLE);
+                comandaBinding.listaComandaView.setVisibility(View.GONE);
+                break;
 
             case R.id.btnBebida:
-                fragmentTransaction.replace(R.id.listaFragmentPrincipal,fragmentBebida);
+                fragmentTransaction.replace(R.id.listaFragmentPrincipal, fragmentBebida);
                 fragmentTransaction.commit();
                 comandaBinding.listaFragmentPrincipal.setVisibility(View.VISIBLE);
                 comandaBinding.listaComandaView.setVisibility(View.GONE);
@@ -176,7 +216,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnPostre:
 
-                fragmentTransaction.replace(R.id.listaFragmentPrincipal,fragmentPostre);
+                fragmentTransaction.replace(R.id.listaFragmentPrincipal, fragmentPostre);
                 fragmentTransaction.commit();
                 comandaBinding.listaFragmentPrincipal.setVisibility(View.VISIBLE);
                 comandaBinding.listaComandaView.setVisibility(View.GONE);
@@ -184,35 +224,37 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
         }
     }
-    public void setBebidaLista(List<Bebida>bebidaListaFragment){
+
+
+
+    public void setBebidaLista(List<Bebida> bebidaListaFragment, boolean aceptar) {
         bebidaLista = bebidaListaFragment;
+        if (aceptar) {
+            Iterator<Bebida> iterator = bebidaLista.iterator();
+            while (iterator.hasNext()) {
+                Bebida bebida = iterator.next();
+                if (bebida.getCantidad() > 0) {
+                    Producto producto = bebida;
+                    boolean encontrado = false;
 
-        Iterator<Bebida> iterator = bebidaLista.iterator();
-        while (iterator.hasNext()) {
-            Bebida bebida = iterator.next();
-            if (bebida.getCantidad() > 0) {
-                Producto producto = bebida;
-                boolean encontrado = false;
+                    Iterator<Producto> productoIterator = productoLista.iterator();
+                    while (productoIterator.hasNext()) {
+                        Producto p = productoIterator.next();
+                        if (p.getNombreProducto().equals(producto.getNombreProducto())) {
+                            p.setCantidad(p.getCantidad() + producto.getCantidad());
 
-                Iterator<Producto> productoIterator = productoLista.iterator();
-                while (productoIterator.hasNext()) {
-                    Producto p = productoIterator.next();
-                    if (p.getNombreProducto().equals(producto.getNombreProducto())) {
-                        // Actualizar la cantidad del producto existente
-
-                        p.setCantidad(producto.getCantidad());
-                        encontrado = true;
-                        break;
+                            encontrado = true;
+                            break;
+                        }
                     }
-                }
 
-                if (!encontrado) {
-                    // Agregar el nuevo producto a productoLista
-                    productoLista.add(producto);
+                    if (!encontrado) {
+                        // Agregar el nuevo producto a productoLista
+                        productoLista.add(producto);
+                    }
                 }
             }
         }
-
 
         comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
         comandaBinding.listaComandaView.setVisibility(View.VISIBLE);
@@ -224,53 +266,52 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    public void setPostreLista(List<Postre> postreListaFragment,boolean aceptar) {
+        if (aceptar) {
+            postreLista = postreListaFragment;
 
+            Iterator<Postre> iterator = postreLista.iterator();
+            while (iterator.hasNext()) {
+                Postre postre = iterator.next();
+                if (postre.getCantidad() > 0) {
+                    Producto producto = postre;
+                    System.out.println(postre.getCantidad());
+                    boolean encontrado = false;
 
-    public void setPostreLista(List<Postre>postreListaFragment){
-        postreLista = postreListaFragment;
+                    Iterator<Producto> productoIterator = productoLista.iterator();
+                    while (productoIterator.hasNext()) {
+                        Producto p = productoIterator.next();
+                        if (p.getNombreProducto().equals(producto.getNombreProducto())) {
+                            // Actualizar la cantidad del producto existente
+                            p.setCantidad(p.getCantidad() + producto.getCantidad());
 
-        Iterator<Postre> iterator = postreLista.iterator();
-        while (iterator.hasNext()) {
-            Postre postre = iterator.next();
-            if (postre.getCantidad() > 0) {
-                Producto producto = postre;
-                System.out.println(postre.getCantidad());
-                boolean encontrado = false;
+                            encontrado = true;
+                            break;
+                        }
+                    }
 
-                Iterator<Producto> productoIterator = productoLista.iterator();
-                while (productoIterator.hasNext()) {
-                    Producto p = productoIterator.next();
-                    if (p.getNombreProducto().equals(producto.getNombreProducto())) {
-                        // Actualizar la cantidad del producto existente
-
-                        p.setCantidad(producto.getCantidad());
-                        encontrado = true;
-                        break;
+                    if (!encontrado) {
+                        // Agregar el nuevo producto a productoLista
+                        productoLista.add(producto);
                     }
                 }
-
-                if (!encontrado) {
-                    // Agregar el nuevo producto a productoLista
-                    productoLista.add(producto);
-                }
             }
+
         }
+            comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
+            comandaBinding.listaComandaView.setVisibility(View.VISIBLE);
 
+            AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
+                    this, R.layout.layoutitem, productoLista);
 
-        comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
-        comandaBinding.listaComandaView.setVisibility(View.VISIBLE);
+            comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
 
-        AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
-                this, R.layout.layoutitem, productoLista);
-
-        comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
     }
 
 
+    public void setComidaLista(List<Comida> comidaListaFragment, boolean aceptar) {
 
-    public void setComidaLista(List<Comida>comidaListaFragment,boolean aceptar){
-
-        if(aceptar) {
+        if (aceptar) {
             comidaLista = comidaListaFragment;
 
             Iterator<Comida> iterator = comidaLista.iterator();
@@ -287,7 +328,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                         if (p.getNombreProducto().equals(producto.getNombreProducto())) {
                             // Actualizar la cantidad del producto existente
 
-                            p.setCantidad(producto.getCantidad());
+                            p.setCantidad(p.getCantidad() + producto.getCantidad());
                             encontrado = true;
                             break;
                         }

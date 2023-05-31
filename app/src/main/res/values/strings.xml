@@ -15,5 +15,9 @@
     <string name="mesa10">Table 10</string>
     <string name="mesa11">Table 11</string>
     <string name="mesa12">Table 12</string>
+    <string name="editar">Edit</string>
+    <string name="eliminar">Delete</string>
+    <string name="ingredientes">Ingredients</string>
+    <string name="accionEliminar">you have removed</string>
 
 </resources>

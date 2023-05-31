@@ -15,5 +15,9 @@
     <string name="mesa10">Mesa 10</string>
     <string name="mesa11">Mesa 11</string>
     <string name="mesa12">Mesa 12</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="ingredientes">Ingredientes</string>
+    <string name="accionEliminar">Has eliminado</string>
 
 </resources>

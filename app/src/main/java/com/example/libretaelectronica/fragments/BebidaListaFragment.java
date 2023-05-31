@@ -92,13 +92,15 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.btnAceptarListaBebida:
 
-            ((ComandaLista)getActivity()).setBebidaLista(bebidaLista);
-            // Finalizar el fragment actual
+            ((ComandaLista)getActivity()).setBebidaLista(bebidaLista,true);
                 getFragmentManager().beginTransaction().remove(this).commit();
+                bebidaLista.clear();
             break;
+
             case R.id.btnCancelarListaBebida:
+                bebidaLista.clear();
+                ((ComandaLista)getActivity()).setBebidaLista(bebidaLista,false);
                 getFragmentManager().beginTransaction().remove(this).commit();
-                ((ComandaLista)getActivity()).setBebidaLista(bebidaLista);
                 System.out.println("boton cancelar");
                 break;
 
@@ -148,6 +150,7 @@ public class BebidaListaFragment extends Fragment implements View.OnClickListene
                 bebidaLista.add(bebida);
             } while (c.moveToNext());
         } else {
+            System.out.println("No se encontraron bebidas");
 
         }
 
