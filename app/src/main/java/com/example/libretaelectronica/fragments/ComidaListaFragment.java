@@ -98,19 +98,20 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        requireActivity().getMenuInflater().inflate(R.menu.menu_context_listacomida, menu);
+        System.out.println("pasa por aqui");
+        getActivity().getMenuInflater().inflate(R.menu.menu_context_listacomida, menu);
     }
 
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+
         // Obtener el ContextMenuInfo
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
         // Obtener la posición del elemento seleccionado
         int position = info.position;
-
           Comida comidaSeleccionada = comidaLista.get(position);
 
 

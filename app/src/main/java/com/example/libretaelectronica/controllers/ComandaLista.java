@@ -1,14 +1,14 @@
 package com.example.libretaelectronica.controllers;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +27,10 @@ import com.example.libretaelectronica.models.Bebida;
 import com.example.libretaelectronica.models.Comida;
 import com.example.libretaelectronica.models.Postre;
 import com.example.libretaelectronica.models.Producto;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +47,9 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
     PostreListaFragment fragmentPostre = new PostreListaFragment();
     AdaptadorComanda adaptadorPersonalizado;
     private String textoMesa = "";
+    private static final String PREF_NAME = "MyPrefs";
+    private static final String KEY_PRODUCT_LIST = "productList";
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,28 +71,46 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.btnBebida.setOnClickListener(this);
         comandaBinding.btnPostre.setOnClickListener(this);
         comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ComandaLista.this);
 
 
-        if (productoLista == null) {
-            productoLista = new ArrayList<>();
-        }
+       cargarListaGuardada();
 
-        adaptadorPersonalizado = new AdaptadorComanda(
-                this, R.layout.layoutitem, productoLista);
+            adaptadorPersonalizado = new AdaptadorComanda(
+                    this, R.layout.layoutitem, productoLista);
 
-        comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
+            comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
 
-        registerForContextMenu(comandaBinding.listaComandaView);
+            registerForContextMenu(comandaBinding.listaComandaView);
+
 
 
     }
 
-    /**
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
 
+    private void cargarListaGuardada() {
+        if (productoLista == null) {
+            sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+            String json = sharedPreferences.getString("productList", "");
+            if (!json.isEmpty()) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<Producto>>() {
+                }.getType();
+                productoLista = gson.fromJson(json, type);
+            } else {
+                productoLista = new ArrayList<>();
+            }
+        }
+    }
+    private void guardarListaProducto() {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(productoLista);
+        editor.putString(KEY_PRODUCT_LIST, json);
+        editor.apply();
+        System.out.println("guardado");
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,6 +121,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                 String mensaje = data.getStringExtra("mensaje");
                 Toast.makeText(this, mensaje,
                         Toast.LENGTH_SHORT).show();
+                productoLista.clear();
                 if (!(productoLista == null)) {
                     productoLista.clear();
                 }
@@ -131,6 +156,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+
         getMenuInflater().inflate(R.menu.menu_context_producto, menu);
     }
 
@@ -138,10 +164,11 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int position = info.position;
-
-        Producto p = productoLista.get(position);
-        System.out.println(p.getNombreProducto());
-
+        Producto p=new Producto();
+        if(info.targetView==comandaBinding.listaComandaView) {
+             p = productoLista.get(position);
+            System.out.println(p.getNombreProducto());
+        }
         switch (item.getItemId()) {
             case R.id.editar:
                 // Acción para el elemento "Editar"
@@ -306,6 +333,12 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
 
             comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        guardarListaProducto();
     }
 
 
