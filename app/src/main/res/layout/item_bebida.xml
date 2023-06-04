@@ -11,21 +11,13 @@
         android:id="@+id/cantidadItemBebida"
         android:layout_width="50dp"
         android:layout_height="80dp"
-        android:text="aaa"
+        android:text="0"
         android:gravity="center"
         android:layout_centerVertical="true"
         android:textColor="@color/black"
         android:background="@color/botonesInferiores"
         android:textSize="30sp"/>
 
-    <ImageView
-        android:id="@+id/imagenMarcaBebida"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/cantidadItemBebida"
-        android:src="@drawable/billete"/>
 
     <TextView
         android:id="@+id/nombreItem"
@@ -35,7 +27,7 @@
         android:layout_marginLeft="30dp"
         android:gravity="center_vertical"
         android:textColor="@color/black"
-        android:layout_toRightOf="@+id/imagenMarcaBebida"
+        android:layout_toRightOf="@+id/cantidadItemBebida"
         android:layout_centerVertical="true"
         android:textSize="15sp"/>
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LibretaElectronica</string>
+    <string name="app_name">AxendaElectronica</string>
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancel</string>
     <string name="mesa1">Mesa 1</string>
@@ -16,14 +16,14 @@
     <string name="mesa12">Mesa 12</string>
     <string name="editar">Editar</string>
     <string name="eliminar">Eliminar</string>
-    <string name="ingredientes">Ingredientes</string>
-    <string name="accionEliminar">Has eliminado</string>
-    <string name="atencion">Atención</string>
+    <string name="ingredientes">Ingredentes</string>
+    <string name="accionEliminar">Eliminaches</string>
+    <string name="atencion">Coidado</string>
     <string name="tituloConstruccion">En construcción</string>
     <string name="mensajeConstruccion">Boton para version posterior</string>
     <string name="restar1">Restar 1</string>
     <string name="mensajeNotificacion">Mesa con comanda</string>
-    <string name="bienvenido">Bienvenido</string>
+    <string name="bienvenido">Benvido</string>
 
 
 </resources>

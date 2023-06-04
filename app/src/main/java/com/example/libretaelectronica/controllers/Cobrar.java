@@ -19,6 +19,8 @@ import com.example.libretaelectronica.adapters.AdaptadorCobro;
 import com.example.libretaelectronica.databinding.ActivityCobrarBinding;
 import com.example.libretaelectronica.models.Producto;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -74,11 +76,16 @@ public class Cobrar extends AppCompatActivity implements View.OnClickListener{
         return resultado;
     }
 
+    /**
+     * metodo para limitar los decimales a 2
+     * @param numero
+     * @return
+     */
     private float limiteFloat(float numero){
+        BigDecimal bd = new BigDecimal(numero);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.floatValue();
 
-        DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Define el formato con dos decimales
-        String formattedNumber = decimalFormat.format(numero);
-        return Float.parseFloat(formattedNumber);
     }
 
     @Override

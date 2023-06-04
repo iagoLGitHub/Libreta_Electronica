@@ -16,16 +16,7 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
 
 
 
-    Button btnMesa, btnBarra;
     ActivitySeleccionarMesaBinding seleccionarMesa;
-    Button btnMesa1,btnMesa2,btnMesa3,btnMesa4,btnMesa5,btnMesa6,
-    btnMesa7,btnMesa8,btnMesa9,btnMesa10,btnMesa11,btnMesa12;
-
-    Boolean btnstateMesa1,btnstateMesa2,btnstateMesa3,btnstateMesa4,
-            btnstateMesa5,btnstateMesa6,btnstateMesa7,btnstateMesa8,
-            btnstateMesa9,btnstateMesa10,btnstateMesa11,btnstateMesa12;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +27,6 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
         View view=seleccionarMesa.getRoot();
         setContentView(view);
 
-
-        /**Iniciamos todos los botones en true(mesa libre)**/
-        btnstateMesa1=true;btnstateMesa2=true;btnstateMesa3=true;btnstateMesa4=true;
-        btnstateMesa5=true;btnstateMesa6=true;btnstateMesa7=true;btnstateMesa8=true;
-        btnstateMesa9=true;btnstateMesa10=true;btnstateMesa11=true;btnstateMesa12=true;
 
         seleccionarMesa.btnMesa1.setOnClickListener(this);
         seleccionarMesa.btnMesa2.setOnClickListener(this);
@@ -54,7 +40,7 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
         seleccionarMesa.btnMesa10.setOnClickListener(this);
         seleccionarMesa.btnMesa11.setOnClickListener(this);
         seleccionarMesa.btnMesa12.setOnClickListener(this);
-        controlColorBtn();
+        seleccionarMesa.btnAtrasSeleccionMesa.setOnClickListener(this);
 
 
     }
@@ -70,139 +56,73 @@ public class SeleccionarMesa extends AppCompatActivity implements View.OnClickLi
             case R.id.btnMesa1:
                 texto=getString(R.string.mesa1);
                 i.putExtra("texto",texto);
-                startActivityForResult(i, Utilidades.MESABTN1);
+                startActivity(i);
                 break;
 
             case R.id.btnMesa2:
                 texto=getString(R.string.mesa2);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN2);
+                startActivity(i);
                 break;
 
             case R.id.btnMesa3:
                 texto=getString(R.string.mesa3);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN3);
+                startActivity(i);
                 break;
             case R.id.btnMesa4:
                 texto=getString(R.string.mesa4);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN4);;
+                startActivity(i);
                 break;
 
             case R.id.btnMesa5:
                 texto=getString(R.string.mesa5);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN5);
+                startActivity(i);
                 break;
             case R.id.btnMesa6:
                 texto=getString(R.string.mesa6);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN6);
+                startActivity(i);
                 break;
             case R.id.btnMesa7:
                 texto=getString(R.string.mesa7);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN7);
+                startActivity(i);
                 break;
             case R.id.btnMesa8:
                 texto=getString(R.string.mesa8);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN8);
+                startActivity(i);
                 break;
             case R.id.btnMesa9:
                 texto=getString(R.string.mesa9);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN9);
+                startActivity(i);
                 break;
             case R.id.btnMesa10:
                 texto=getString(R.string.mesa10);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN10);
+                startActivity(i);
                 break;
             case R.id.btnMesa11:
                 texto=getString(R.string.mesa11);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN11);
+                startActivity(i);
                 break;
             case R.id.btnMesa12:
                 texto=getString(R.string.mesa12);
                 i.putExtra("texto",texto);
-                startActivityForResult(i,Utilidades.MESABTN12);
+                startActivity(i);
                 break;
 
+            case R.id.btnAtrasSeleccionMesa:
+                 onBackPressed();
+                 break;
+
         }
 
     }
 
-    /**
-     * control del color en los botones, si es verde la mesa esta libre(true) sino es roja(false)
-     */
-    private void controlColorBtn(){
-
-        if(btnstateMesa1){
-
-            seleccionarMesa.btnMesa1.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa1.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa2){
-            seleccionarMesa.btnMesa2.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa2.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa3){
-            seleccionarMesa.btnMesa3.setBackgroundColor(Color.GREEN);
-        }else{
-            btnMesa3.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa4){
-            seleccionarMesa.btnMesa4.setBackgroundColor(Color.GREEN);
-        }else{
-            btnMesa4.setBackgroundColor(Color.RED);
-        }if(btnstateMesa5){
-            seleccionarMesa.btnMesa5.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa5.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa6){
-            seleccionarMesa.btnMesa6.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa6.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa7){
-            seleccionarMesa.btnMesa7.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa7.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa8){
-            seleccionarMesa.btnMesa8.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa8.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa9){
-            seleccionarMesa.btnMesa9.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa9.setBackgroundColor(Color.RED);
-
-        }
-        if(btnstateMesa10){
-            seleccionarMesa.btnMesa10.setBackgroundColor(Color.GREEN);
-
-        }else{
-            seleccionarMesa.btnMesa10.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa11){
-            seleccionarMesa.btnMesa11.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa11.setBackgroundColor(Color.RED);
-        }
-        if(btnstateMesa12){
-            seleccionarMesa.btnMesa12.setBackgroundColor(Color.GREEN);
-        }else{
-            seleccionarMesa.btnMesa12.setBackgroundColor(Color.RED);
-        }
-
-
-    }
 }

@@ -149,6 +149,7 @@ public class ComidaListaFragment extends Fragment implements View.OnClickListene
                 getFragmentManager().beginTransaction().remove(this).commit();
                 break;
 
+
         }
     }
 

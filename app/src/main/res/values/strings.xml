@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">LibretaElectronica</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">electronic diary</string>
     <string name="aceptar">Accept</string>
     <string name="cancelar">Cancel</string>
     <string name="mesa1">Table 1</string>
@@ -18,6 +17,12 @@
     <string name="editar">Edit</string>
     <string name="eliminar">Delete</string>
     <string name="ingredientes">Ingredients</string>
-    <string name="accionEliminar">you have removed</string>
+    <string name="accionEliminar">you have removed </string>
+    <string name="atencion">Attention</string>
+    <string name="tituloConstruccion">in construction</string>
+    <string name="mensajeConstruccion">Button for later version</string>
+    <string name="restar1">to subtract 1</string>
+    <string name="mensajeNotificacion">table with order</string>
+    <string name="bienvenido">Welcome</string>
 
 </resources>

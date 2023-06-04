@@ -5,8 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
@@ -35,8 +43,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ComandaLista extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class ComandaLista extends AppCompatActivity implements View.OnClickListener {
     public final static int REQUESTCOMANDA = 100;
+    public final static int REQUESTNOTIFICACION=101;
     ArrayList<Producto> productoLista;
     List<Comida> comidaLista;
     List<Bebida> bebidaLista;
@@ -65,7 +74,6 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.textoCabecera.setText(textoMesa);
 
         /**Asignamos los escuchadores*/
-        comandaBinding.listaComandaView.setOnItemClickListener(this);
         comandaBinding.btnAtras.setOnClickListener(this);
         comandaBinding.btnComida.setOnClickListener(this);
         comandaBinding.btnBebida.setOnClickListener(this);
@@ -74,15 +82,14 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ComandaLista.this);
 
 
-       cargarListaGuardada();
+        cargarListaGuardada();
 
-            adaptadorPersonalizado = new AdaptadorComanda(
-                    this, R.layout.layoutitem, productoLista);
+        adaptadorPersonalizado = new AdaptadorComanda(
+                this, R.layout.layoutitem, productoLista);
 
-            comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
+        comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
 
-            registerForContextMenu(comandaBinding.listaComandaView);
-
+        registerForContextMenu(comandaBinding.listaComandaView);
 
 
     }
@@ -102,6 +109,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
     private void guardarListaProducto() {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -109,8 +117,15 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         String json = gson.toJson(productoLista);
         editor.putString(KEY_PRODUCT_LIST, json);
         editor.apply();
-        System.out.println("guardado");
     }
+
+    /**
+     * Devuelve un onActivityResult que si  es ok,vacia todas las listas y notifica con un Toast al usuario que la factur
+     * Que el cobro ha sido realizado con exito.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -153,6 +168,7 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         return true;
 
     }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -164,26 +180,34 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int position = info.position;
-        Producto p=new Producto();
-        if(info.targetView==comandaBinding.listaComandaView) {
-             p = productoLista.get(position);
-            System.out.println(p.getNombreProducto());
-        }
+        Producto p = new Producto();
+
         switch (item.getItemId()) {
+
             case R.id.editar:
-                // Acción para el elemento "Editar"
+
+                p = productoLista.get(position);
+                productoLista.set(position, restarCantidad(p));
+                if (p.getCantidad() == 0) {
+                    productoLista.remove(position);
+                }
+                adaptadorPersonalizado = new AdaptadorComanda(
+                        this, R.layout.layoutitem, productoLista);
+                comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
+
+                adaptadorPersonalizado.notifyDataSetChanged();
                 return true;
 
             case R.id.eliminar:
-                // Acción para el elemento "Eliminar"
-                System.out.println("pasa por aqui");
+                p=productoLista.get(position);
                 productoLista.remove(position);
                 adaptadorPersonalizado = new AdaptadorComanda(
                         this, R.layout.layoutitem, productoLista);
                 comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
-                String texto=getString(R.string.accionEliminar);
+                String texto = getString(R.string.accionEliminar);
                 adaptadorPersonalizado.notifyDataSetChanged();
-                Toast.makeText(this, texto + p.getNombreProducto(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, texto +" "+
+                        p.getNombreProducto(), Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
@@ -191,17 +215,32 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Resta 1 en el atributo de cantidad de producto, si el producto esta a 0 no resta
+     * @param p
+     * @return
+     */
+    private Producto restarCantidad(Producto p) {
+        int cantidad;
+        if (p.getCantidad() > 0) {
+            cantidad = p.getCantidad();
+            int cantidadRestada = cantidad - 1;
+            p.setCantidad(cantidadRestada);
+        }
+        return p;
+    }
 
     /**
-     * El boton de calculadora nos hara una llamada del sistema para que nos llevara a la aplicación calculadora
+     * Menu que tiene dos opciones, uno llevara a la calculadora del sistema, y el otro enviara un
+     * startActivityForResult a la clase Cobrar
+     * @param item
+     * @return
      */
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menuCalculadora:
-                System.out.println("menuCalculadora");
                 Intent i = new Intent();
                 i.setClassName("com.android.calculator2", "com.android.calculator2.Calculator");
                 startActivity(i);
@@ -220,6 +259,10 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Control de botones, cada uno ligado aun fragmento.class tambien se controlan con visibilidad
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -249,11 +292,79 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                 comandaBinding.listaComandaView.setVisibility(View.GONE);
                 break;
 
+            case R.id.btnAtras:
+                onBackPressed();
+
+                break;
+
+
         }
     }
 
+    /**
+     * Vuelve a la Activity anterior guardando la lista de productos seleccionados en un sharedPreference
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (!productoLista.isEmpty()) {
+            System.out.println("pasa por aqui");
+            notificacionListaProducto();
+
+        }
+        guardarListaProducto();
+    }
+
+    /**
+     * Metodo para mostrar la notificación, esta al clickar te llevara a la pantalla de comandalista,
+     * contiene control de versiones, si es mayor o igual a la versión 26 creara un canal de notificación.
+     */
+
+    private void notificacionListaProducto() {
+        Notification.Builder builder = new Notification.Builder(this);
+        String aviso = getString(R.string.atencion);
+        String mensaje = getString(R.string.mensajeNotificacion);
+        builder.setSmallIcon(R.drawable.comanda);
+        builder.setTicker(aviso);
+        builder.setContentTitle(aviso);
+        builder.setContentText(mensaje);
+        Bitmap icono = BitmapFactory.decodeResource(getResources(), R.drawable.portada);
+        builder.setLargeIcon(icono);
+        Intent i = new Intent(this, ComandaLista.class);
+        PendingIntent pi = PendingIntent.getActivity(this, REQUESTNOTIFICACION, i, 0);
+        builder.setContentIntent(pi);
+
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String canalId = "mi_canal_id";
+            String nombreCanal = "canalNotificacionComanda";
 
 
+            String description = getString(R.string.mensajeNotificacion);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(canalId, nombreCanal, importance);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            channel.setDescription(description);
+            notificationManager.createNotificationChannel(channel);
+
+            builder.setChannelId(canalId);
+
+        }
+
+        Notification notificacion=builder.build();
+        nm.notify(REQUESTNOTIFICACION, notificacion);
+
+    }
+
+
+    /**
+     * Metodo que controla la lista de bebidas enviada desde BebidaListFragment,y la introduce en
+     * productoLista
+     * @param bebidaListaFragment
+     * @param aceptar
+     */
     public void setBebidaLista(List<Bebida> bebidaListaFragment, boolean aceptar) {
         bebidaLista = bebidaListaFragment;
         if (aceptar) {
@@ -276,7 +387,6 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                     }
 
                     if (!encontrado) {
-                        // Agregar el nuevo producto a productoLista
                         productoLista.add(producto);
                     }
                 }
@@ -292,8 +402,13 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
     }
 
-
-    public void setPostreLista(List<Postre> postreListaFragment,boolean aceptar) {
+    /**
+     * * Metodo que controla la lista de postres enviada desde PostreListFragment,y la introduce en
+     * productoLista
+     * @param postreListaFragment
+     * @param aceptar
+     */
+    public void setPostreLista(List<Postre> postreListaFragment, boolean aceptar) {
         if (aceptar) {
             postreLista = postreListaFragment;
 
@@ -309,7 +424,6 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                     while (productoIterator.hasNext()) {
                         Producto p = productoIterator.next();
                         if (p.getNombreProducto().equals(producto.getNombreProducto())) {
-                            // Actualizar la cantidad del producto existente
                             p.setCantidad(p.getCantidad() + producto.getCantidad());
 
                             encontrado = true;
@@ -318,30 +432,28 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                     }
 
                     if (!encontrado) {
-                        // Agregar el nuevo producto a productoLista
                         productoLista.add(producto);
                     }
                 }
             }
 
         }
-            comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
-            comandaBinding.listaComandaView.setVisibility(View.VISIBLE);
+        comandaBinding.listaFragmentPrincipal.setVisibility(View.GONE);
+        comandaBinding.listaComandaView.setVisibility(View.VISIBLE);
 
-            AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
-                    this, R.layout.layoutitem, productoLista);
+        AdaptadorComanda adaptadorPersonalizado = new AdaptadorComanda(
+                this, R.layout.layoutitem, productoLista);
 
-            comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
+        comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
 
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
 
-        guardarListaProducto();
-    }
-
-
+    /**
+     * * Metodo que controla la lista de comidas enviada desde ComidaListFragment,y la introduce en
+     * productoLista
+     * @param comidaListaFragment
+     * @param aceptar
+     */
     public void setComidaLista(List<Comida> comidaListaFragment, boolean aceptar) {
 
         if (aceptar) {
@@ -359,8 +471,6 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                     while (productoIterator.hasNext()) {
                         Producto p = productoIterator.next();
                         if (p.getNombreProducto().equals(producto.getNombreProducto())) {
-                            // Actualizar la cantidad del producto existente
-
                             p.setCantidad(p.getCantidad() + producto.getCantidad());
                             encontrado = true;
                             break;
@@ -368,7 +478,6 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
                     }
 
                     if (!encontrado) {
-                        // Agregar el nuevo producto a productoLista
                         productoLista.add(producto);
                     }
                 }
@@ -385,8 +494,5 @@ public class ComandaLista extends AppCompatActivity implements View.OnClickListe
         comandaBinding.listaComandaView.setAdapter(adaptadorPersonalizado);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        System.out.println("esto es comandalista");
-    }
+
 }
